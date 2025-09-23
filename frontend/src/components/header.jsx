@@ -1,38 +1,46 @@
 import React from 'react';
-import './Header.css'; // или используй Tailwind
+import './header.css';
+import {
+    BrowserRouter as Router,
+    Route,
+    Link,
+} from 'react-router-dom';
 
 export default function Header() {
     return (
-        <header className="header">
-            {/* Логотип */}
-            <div className="logo">
-                <span className="brand">XPOW</span>
-            </div>
+        <Router>
+            <header className="header">
+                {/* Логотип */}
+                <div className="logo">
+                    <span className="brand">XPOW</span>
+                </div>
 
-            {/* Главное меню */}
-            <nav className="main-nav">
-                <ul className="nav-list">
-                    <li><a href="#" className="nav-link">Home</a></li>
-                    <li><a href="#" className="nav-link active">Casino</a></li>
-                    <li><a href="#" className="nav-link">Free Money</a></li>
-                    <li><a href="#" className="nav-link">Sports</a></li>
-                </ul>
-            </nav>
+                {/* Главное меню */}
+                <nav className="main-nav">
+                    <ul className="nav-list">
+                        <li> <Link to="/" className="nav-link">Home</Link> </li>
+                        <li> <Link to="/casino" className="nav-link">Casino</Link> </li>
+                        <li> <Link to="/bonus" className="nav-link">Free money</Link> </li>
+                        <li> <Link to="/sports" className="nav-link">Sports</Link> </li>
+                    </ul>
+                </nav>
 
-            {/* Правая часть: кнопки */}
-            <div className="actions">
-                <button className="btn-login">Login</button>
-                <button className="btn-registration">Registration</button>
-            </div>
+                {/* Панель регистрации */}
+                <div className="actions">
+                    <button className="btn-login">Login</button>
+                    <button className="btn-registration">Registration</button>
+                </div>
 
-            {/* Подменю (под казино) */}
-            <div className="sub-nav">
-                <ul className="sub-list">
-                    <li><a href="#" className="sub-link active">Lobby</a></li>
-                    <li><a href="#" className="sub-link">Live-games</a></li>
-                    <li><a href="#" className="sub-link">Quick games</a></li>
-                </ul>
-            </div>
-        </header>
+                {/* Дополнительное меню */}
+                <div className="sub-nav">
+                    <ul className="sub-list">
+                        <li><Link to="/" className="sub-link active">Lobby</Link></li>
+                        <li><Link to="/casino" className="sub-link">Live games</Link></li>
+                        <li><Link to="/casino" className="sub-link">Quick games</Link></li>
+                    </ul>
+                </div>
+            </header>
+        </Router>
+
     );
 }
