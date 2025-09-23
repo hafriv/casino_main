@@ -15,7 +15,6 @@ function App() {
                 onVideoEnd={handleVideoEnd}
                 playbackRate={2.0}
             />
-
         <Header/>
         </>
     );
