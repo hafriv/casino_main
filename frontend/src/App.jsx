@@ -3,6 +3,8 @@ import videoFile from './assets/Композиция 1_2.mp4';
 import Header from "./components/header.jsx";
 import './index.css'
 import './App.css'
+
+
 function App() {
     const handleVideoEnd = () => {
         console.log("Видео закончилось!");
