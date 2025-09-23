@@ -6,7 +6,6 @@ import './App.css'
 function App() {
     const handleVideoEnd = () => {
         console.log("Видео закончилось!");
-        // Здесь можно показать контент, изменить состояние и т.д.
     };
 
     return (
@@ -17,7 +16,6 @@ function App() {
                 playbackRate={2.0}
             />
 
-            {/* После видео — стилизовано с Tailwind */}
         <Header/>
         </>
     );
