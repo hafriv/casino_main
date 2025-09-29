@@ -4,23 +4,26 @@ import { useState } from 'react';
 import videoFile from '../assets/Композиция 1_2.mp4';
 
 export default function MainPage() {
-    const [showContent, setShowContent] = useState(false);
+    const [showVideo, setShowVideo] = useState(true);
+    const [showHeader, setShowHeader] = useState(false);
 
     const handleVideoEnd = () => {
-        setShowContent(true);
+        setTimeout(() => {
+            setShowVideo(false);
+            setShowHeader(true);
+        }, 200); // Shorter delay
     };
 
     return (
         <div className="min-h-screen bg-black text-white">
-            {!showContent ? (
+            {showVideo && (
                 <Player
                     videoSrc={videoFile}
                     onVideoEnd={handleVideoEnd}
-                    playbackRate={2.0}
+                    playbackRate={6.0}
                 />
-            ) : (
-                <Header />
             )}
+            {showHeader && <div className="fade-in"><Header /></div>}
         </div>
     );
 }
