@@ -82,7 +82,7 @@ max-width: 200px;
 }
 
 .btn-registration {
-    background: #00e5ff;
+    background: #ddd;
     color: black;
     border: none;
     border-radius: 10px;
@@ -93,7 +93,8 @@ max-width: 200px;
 }
 
 .btn-registration:hover {
-    background: #00e5ff;
+    background: #007bff;
+    color: white;
 }
 
 .sub-nav {
