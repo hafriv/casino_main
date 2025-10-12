@@ -9,4 +9,16 @@ body {
     background-color: #000;
     color: white;
     font-family: Arial, sans-serif;
+    margin: 0 clamp(1rem, 5vw, 200px);
+}
+
+.site-enter {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.site-enter-active {
+    opacity: 1;
+    transform: translateY(0);
 }

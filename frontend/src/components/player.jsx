@@ -1,15 +1,23 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import './Player.css';
 
-export default function Player({ videoSrc, onVideoEnd, playbackRate = 0.5 }) {
+export default function Player({ videoSrc, onVideoEnd, playbackRate = 1 }) {
     const videoRef = useRef(null);
     const [fadeOut, setFadeOut] = useState(false);
 
     const handleEnd = () => {
-        setFadeOut(true);
-        setTimeout(() => {
-            if (onVideoEnd) onVideoEnd();
-        }, 50); // Shorter wait
+        if (onVideoEnd) onVideoEnd();
+    };
+
+    const handleTimeUpdate = () => {
+        if (videoRef.current) {
+            const video = videoRef.current;
+            const duration = video.duration;
+            const currentTime = video.currentTime;
+            if (duration > 0 && (duration - currentTime) <= 0.5) {
+                setFadeOut(true);
+            }
+        }
     };
 
     useEffect(() => {
@@ -25,6 +33,7 @@ export default function Player({ videoSrc, onVideoEnd, playbackRate = 0.5 }) {
             autoPlay
             muted
             onEnded={handleEnd}
+            onTimeUpdate={handleTimeUpdate}
             className={`fullscreen-video ${fadeOut ? 'fade-out' : ''}`}
         />
     );
