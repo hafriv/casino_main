@@ -1,4 +1,6 @@
 
+
+
 * {
     margin: 0;
     padding: 0;
@@ -10,6 +12,37 @@ body {
     color: white;
     font-family: Arial, sans-serif;
     margin: 0 clamp(1rem, 5vw, 200px);
+}
+
+.mobile-menu {
+  padding: 20px;
+  background: linear-gradient(to right, #001a33, #003366);
+}
+
+.mobile-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mobile-nav li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 15px 0;
+  display: block;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  transition: color 0.3s ease;
+}
+
+.mobile-nav li a:hover {
+  color: #ffd700;
 }
 
 .site-enter {
