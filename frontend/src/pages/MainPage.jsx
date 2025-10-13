@@ -1,5 +1,6 @@
 import Header from '../components/Header.jsx';
 import Player from '../components/Player.jsx';
+import Slider from '../components/Slider.jsx';
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import videoFile from '../assets/Композиция 1_2.mp4';
@@ -11,13 +12,13 @@ export default function MainPage() {
     const [showVideo, setShowVideo] = useState(true);
     const [showHeader, setShowHeader] = useState(false);
     const [animateHeader, setAnimateHeader] = useState(false);
+    const [showLabels, setShowLabels] = useState(false);
 
     const handleVideoEnd = () => {
         setShowVideo(false);
         setShowHeader(true);
-        setTimeout(() => {
-            setAnimateHeader(true);
-        }, 10);
+        setAnimateHeader(true);
+        setShowLabels(true);
     };
 
     useEffect(() => {
@@ -28,6 +29,8 @@ export default function MainPage() {
 
     return (
         <div className="min-h-screen bg-black text-white">
+            {showHeader && <div className={`site-enter ${animateHeader ? 'site-enter-active' : ''}`}><Header /></div>}
+            <Slider showLabels={showLabels} />
             {showVideo && (
                 <Player
                     videoSrc={videoFile}
@@ -35,7 +38,7 @@ export default function MainPage() {
                     playbackRate={1.0}
                 />
             )}
-            {showHeader && <div className={`site-enter ${animateHeader ? 'site-enter-active' : ''}`}><Header /></div>}
+
         </div>
     );
 }
