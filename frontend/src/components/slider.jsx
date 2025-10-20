@@ -4,43 +4,21 @@ import './slider.scss';
 const slidesData = [
   {
     id: 'slide-1',
-    leftImage: 'https://www.androidp1.com/uploads/posts/2023-07/lucky-jet.webp',
-    rightImage: 'https://www.androidp1.com/uploads/posts/2023-07/lucky-jet.webp',
+    image: 'https://sahcon.com/wp-content/uploads/2025/08/3.jpg',
     label: 'lucky jet',
   },
   {
     id: 'slide-2',
-    leftImage: 'https://roarcdn.fitting-solutions.at/borgata/casino/en/blog/wp-content/uploads/2023/07/25114947/Header-A-close-up-of-a-white-roulette-ball-Roulette-odds.jpg?lossy=1&ssl=1',
-    rightImage: 'https://roarcdn.fitting-solutions.at/borgata/casino/en/blog/wp-content/uploads/2023/07/25114947/Header-A-close-up-of-a-white-roulette-ball-Roulette-odds.jpg?lossy=1&ssl=1',
+    image: 'https://roarcdn.fitting-solutions.at/borgata/casino/en/blog/wp-content/uploads/2023/07/25114947/Header-A-close-up-of-a-white-roulette-ball-Roulette-odds.jpg?lossy=1&ssl=1',
     label: 'roulette',
   },
 ];
 
-const SvgDefs = ({ slide, index }) => (
-    <>
-      <pattern id={`pattern${index + 1}l`} patternUnits="userSpaceOnUse" width="562" height="366" viewBox="0 0 562 366">
-        <image xlinkHref={slide.leftImage} width="600px" height="600px" />
-      </pattern>
-      <pattern id={`pattern${index + 1}r`} patternUnits="userSpaceOnUse" x="365px" width="562" height="366" viewBox="0 0 562 366">
-        <image xlinkHref={slide.rightImage} width="600px" height="600px" />
-      </pattern>
-    </>
-);
 
-const Slide = ({ slide, index }) => (
-    <div className="slide" id={slide.id}>
-      <div className="slide__images">
-        <div className="slide__image slide__image--left">
-          <svg viewBox="0 0 900 365" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" xmlSpace="preserve" x="0px" y="0px">
-            <path d="M 0 0 L 0 365 L 351.2382 365 L 562 0 L 0 0 Z" fill={`url(#pattern${index + 1}l)`} />
-          </svg>
-        </div>
-        <div className="slide__image slide__image--right">
-          <svg viewBox="0 0 900 365" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" xmlSpace="preserve" x="0px" y="0px">
-            <path d="M 900 365 L 900 0 L 548.7618 0 L 338 365 L 900 365 Z" fill={`url(#pattern${index + 1}r)`} />
-          </svg>
-        </div>
-      </div>
+
+const Slide = ({ slide, index, isActive }) => (
+    <div className={`slide ${isActive ? 'active' : ''}`} id={slide.id}>
+      <div className="slide__bg" style={{ backgroundImage: `url(${slide.image})` }}></div>
     </div>
 );
 
@@ -50,15 +28,12 @@ export default function Slider({ showLabels = true }) {
   const autoSlideInterval = 10000;
 
   useEffect(() => {
-    window.location.href = "#slide-1";
-  }, []);
-
-  useEffect(() => {
     if (!showLabels) return;
 
     let progressInterval;
 
     const startProgress = () => {
+      setProgress(0);
       let startTime = Date.now();
       progressInterval = setInterval(() => {
         const elapsed = Date.now() - startTime;
@@ -66,8 +41,10 @@ export default function Slider({ showLabels = true }) {
         if (currentProgress >= 100) {
           setCurrentSlide((prev) => (prev + 1) % slidesData.length);
           startTime = Date.now();
+          setProgress(0);
+        } else {
+          setProgress(currentProgress);
         }
-        setProgress(currentProgress);
       }, 50);
     };
 
@@ -76,32 +53,18 @@ export default function Slider({ showLabels = true }) {
     return () => {
       if (progressInterval) clearInterval(progressInterval);
     };
-  }, [showLabels]);
-
-  useEffect(() => {
-    if (!showLabels) return;
-
-    const nextSlideHref = slidesData[(currentSlide + 1) % slidesData.length].id;
-    const timer = setTimeout(() => {
-      window.location.href = `#${nextSlideHref}`;
-    }, autoSlideInterval);
-
-    return () => clearTimeout(timer);
   }, [currentSlide, showLabels]);
+
+  const handleSlideClick = (index, e) => {
+    e.preventDefault();
+    setCurrentSlide(index);
+  };
 
   return (
       <header className="header__main">
         <div className="slider">
-          <svg className="slider__mask" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 1080" width="0" height="0">
-            <defs>
-              {slidesData.map((slide, index) => (
-                  <SvgDefs key={slide.id} slide={slide} index={index} />
-              ))}
-            </defs>
-          </svg>
-
           {slidesData.map((slide, index) => (
-              <Slide key={slide.id} slide={slide} index={index} />
+              <Slide key={slide.id} slide={slide} index={index} isActive={currentSlide === index} />
           ))}
 
           {showLabels && (
@@ -111,8 +74,14 @@ export default function Slider({ showLabels = true }) {
           )}
 
           <div className={`slider__pagination ${showLabels ? 'show' : ''}`}>
-            {slidesData.map((slide) => (
-                <a key={slide.id} href={`#${slide.id}`} className={`button ${showLabels ? 'show' : ''}`}>{slide.label}</a>
+            {slidesData.map((slide, index) => (
+                <button
+                  key={slide.id}
+                  onClick={(e) => handleSlideClick(index, e)}
+                  className={`button ${showLabels ? 'show' : ''} ${currentSlide === index ? 'active' : ''}`}
+                >
+                  {slide.label}
+                </button>
             ))}
           </div>
         </div>

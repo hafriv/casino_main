@@ -8,34 +8,51 @@ $msuxf-transition-timing: ease !default;
 
 .header__main {
   position: relative;
-  min-height: 100vh;
-  overflow: hidden;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
   text-align: left;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
 }
 
 .slider {
-  width: 100vw;
-  height: 100vh;
+  position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  max-height: 600px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+
+  @media (max-width: 1024px) {
+    aspect-ratio: 4 / 3;
+  }
+
+  @media (max-width: 768px) {
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+  }
 }
 
 .slide {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 70%;
   position: absolute;
   width: 100%;
+  top: 0;
+  left: 0;
 
-  &:target {
+  &.active {
     .slide__bg {
       opacity: 1;
-    }
-
-    .slide__image {
-      transform: translate(0);
-      opacity: 1;
-      transition-delay: 0.5s;
-      filter: blur(0) drop-shadow(0px 10px 30px rgba(0,0,0,0.35));
+      filter: blur(0);
     }
   }
 }
@@ -45,53 +62,30 @@ $msuxf-transition-timing: ease !default;
   z-index: 0;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  opacity: 1;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   filter: blur(10px);
+  transition: opacity 0.5s ease-in-out 0s, filter 0.5s ease-in-out 0.3s;
 }
 
-.slide__images {
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-  height: 365px;
-  margin: 0 20px;
-}
-
-.slide__image {
-  position: absolute;
-  width: 100%;
-  opacity: 0;
-  transition: all 0.5s ease-in-out 0s;
-  filter: blur(10px) drop-shadow(0px 10px 30px rgba(0,0,0,0.35));
-  will-change: transform, opacity, filter;
-
-  svg {
-    display: block;
-  }
-
-  &--left {
-    transform: translate(0.75%, -10px);
-  }
-
-  &--right {
-    top: 5vmin;
-    transform: translate(-0.75%, 10px);
-  }
-}
 
 .slider__pagination {
   position: absolute;
-  bottom: 7vh;
+  bottom: 200px;
   width: 100%;
   text-align: center;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s ease;
+  z-index: 10;
+
+  @media (max-width: 768px) {
+    bottom: 3px;
+  }
 
   &.show {
     opacity: 1;
@@ -99,11 +93,34 @@ $msuxf-transition-timing: ease !default;
   }
 }
 
+.slider__progress {
+  position: absolute;
+  bottom: 140px;
+  left: 25%;
+  width: 50%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  z-index: 5;
+
+  @media (max-width: 768px) {
+    height: 3px;
+  }
+}
+
+.slider__progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #4CAF50, #8BC34A);
+  transition: width 0.05s linear;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
 .button {
   position: relative;
   display: inline-block;
-  padding: 20px 40px;
-  border: 2px solid $msuxf-background;
+  padding: 12px 32px;
+  margin: 0 8px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
   line-height: 1;
   font: 600 12px 'Montserrat', sans-serif;
   text-align: center;
@@ -111,17 +128,43 @@ $msuxf-transition-timing: ease !default;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: white;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
   transition: all $msuxf-transition-duration $msuxf-transition-timing;
   appearance: none;
 
+  @media (max-width: 768px) {
+    padding: 10px 24px;
+    margin: 0 5px;
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 8px 20px;
+    margin: 0 4px;
+    font-size: 9px;
+  }
+
   &:hover {
     color: $msuxf-background-dark;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  &.active {
+    color: $msuxf-background-dark;
     background-color: white;
+    border-color: white;
   }
 
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.25s ease,
+  border-color 0.25s ease, color 0.25s ease;
 
   &.show {
     opacity: 1;
