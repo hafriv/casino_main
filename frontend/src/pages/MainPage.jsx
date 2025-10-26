@@ -55,17 +55,19 @@ export default function MainPage() {
     return (
         <div className="min-h-screen bg-black text-white">
             {showHeader && <div className={`site-enter ${animateHeader ? 'site-enter-active' : ''}`}><Header /></div>}
-            {!isMobile && <Slider showLabels={showLabels} />}
+            {showHeader && !isMobile && <div className={`site-enter ${animateHeader ? 'site-enter-active' : ''}`}><Slider showLabels={showLabels} /></div>}
             {isMobile && showHeader && (
-                <div className="mobile-menu">
-                    <nav className="mobile-nav">
-                        <ul>
-                            <li><a href="#home">Home</a></li>
-                            <li><a href="#casino">Casino</a></li>
-                            <li><a href="#bonus">Free Money</a></li>
-                            <li><a href="#sports">Sports</a></li>
-                        </ul>
-                    </nav>
+                <div className={`site-enter ${animateHeader ? 'site-enter-active' : ''}`}>
+                    <div className="mobile-menu">
+                        <nav className="mobile-nav">
+                            <ul>
+                                <li><a href="#home">Home</a></li>
+                                <li><a href="#casino">Casino</a></li>
+                                <li><a href="#bonus">Free Money</a></li>
+                                <li><a href="#sports">Sports</a></li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             )}
             {showVideo && (
