@@ -2,7 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import './Header.css';
 import { Link, useLocation } from 'react-router-dom';
 import Granim from 'granim';
+import OnlinePlayers from './OnlinePlayers';
 import logo from '../assets/logo.png';
+import bonus from '../assets/bonus.gif';
 
 export default function Header() {
     const location = useLocation();
@@ -53,6 +55,9 @@ export default function Header() {
         setUnderline(prev => ({ ...prev, opacity: 0 }));
     };
 
+    const [mobileOpen, setMobileOpen] = useState(false);
+    const toggleMobile = () => setMobileOpen(v => !v);
+
 
 
     return (
@@ -66,39 +71,57 @@ export default function Header() {
                 <div className="logo">
                     <img src={logo} alt="XPOW Casino" className="logo-image" />
                 </div>
+                {/* Players panel moved to the left side */}
+                <OnlinePlayers />
             </div>
 
-            <div className="header-center">
+            <div className={`header-center ${mobileOpen ? 'mobile-open' : ''}`}>
                 {/* Главное меню */}
-                <nav className="main-nav">
-                    <ul className="nav-list" ref={ulRef} onMouseLeave={handleMouseLeave}>
-                        <li onMouseEnter={handleMouseEnter}><Link to="/home" className={`nav-link ${location.pathname === '/home' ? 'nav-link-active' : ''}`}>Home</Link></li>
-                        <li onMouseEnter={handleMouseEnter}><Link to="/games" className="nav-link">Casino</Link></li>
-                        <li onMouseEnter={handleMouseEnter}><Link to="/bonus" className="nav-link">Free money</Link></li>
-                        <li onMouseEnter={handleMouseEnter}><Link to="/sports" className="nav-link">Sports</Link></li>
+                <nav id="main-navigation" className="main-nav" aria-label="Main navigation">
+                    <ul className={`nav-list ${mobileOpen ? 'open' : ''}`} ref={ulRef} onMouseLeave={handleMouseLeave}>
+                        <li onMouseEnter={handleMouseEnter}><Link to="/home" onClick={() => setMobileOpen(false)} className={`nav-link sparkle-hover ${location.pathname === '/home' ? 'nav-link-active' : ''}`}>Home</Link></li>
+                        <li onMouseEnter={handleMouseEnter}><Link to="/games" onClick={() => setMobileOpen(false)} className="nav-link sparkle-hover">Casino</Link></li>
+                        <li onMouseEnter={handleMouseEnter}><Link to="/bonus" onClick={() => setMobileOpen(false)} className="nav-link sparkle-hover">Free money</Link></li>
+                        <li onMouseEnter={handleMouseEnter}><Link to="/sports" onClick={() => setMobileOpen(false)} className="nav-link sparkle-hover">Sports</Link></li>
                         <div className="nav-underline" style={{ width: underline.width + 'px', left: underline.left + 'px', opacity: underline.opacity }}></div>
                     </ul>
                 </nav>
+                <img src={bonus} alt="Bonus" className="bonus-image" />
+
             </div>
 
             <div className="header-right">
-                {/* Панель регистрации */}
+                <button
+                    className="mobile-toggle"
+                    aria-controls="main-navigation"
+                    aria-expanded={mobileOpen}
+                    onClick={toggleMobile}
+                    aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+                >
+                    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <rect x="3" y="6" width="18" height="2" rx="1"></rect>
+                        <rect x="3" y="11" width="18" height="2" rx="1"></rect>
+                        <rect x="3" y="16" width="18" height="2" rx="1"></rect>
+                    </svg>
+                </button>
                 <div className="actions">
                     <button className="btn-login">Login</button>
                     <button className="btn-registration">Registration</button>
                 </div>
 
+                {/* (WiFi icon removed — replaced inside OnlinePlayers) */}
+
                 {/* Дополнительное меню */}
                 <div className="sub-nav">
                     <ul className="sub-list">
                 <li>
-                    <Link to="/home" className="sub-link sub-link-1">Lobby</Link>
+                    <Link to="/home" className="sub-link sub-link-1 sparkle-hover">Lobby</Link>
                 </li>
                 <li>
-                    <Link to="/games" className="sub-link sub-link-2">Live</Link>
+                    <Link to="/games" className="sub-link sub-link-2 sparkle-hover">Live</Link>
                 </li>
                 <li>
-                    <Link to="/games" className="sub-link sub-link-3">Rapid</Link>
+                    <Link to="/games" className="sub-link sub-link-3 sparkle-hover">Rapid</Link>
                 </li>
                     </ul>
                 </div>

@@ -1,10 +1,24 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:600');
+@font-face {
+  font-family: 'Old Bastards';
+src: url('../assets/fonts/oldb.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
-$msuxf-background: #fff !default;
-$msuxf-background-dark: #333 !default;
-$msuxf-font-family-alt: 'Montserrat', sans-serif;
-$msuxf-transition-duration: 0.25s !default;
-$msuxf-transition-timing: ease !default;
+/* Queenrocker font for online players number */
+@font-face {
+  font-family: 'Queen Rocker';
+  src: url('../assets/fonts/Queenrocker.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --move-x: 0deg;
+  --move-y: 0deg;
+  --transition: 1.5s cubic-bezier(.05, .5, 0, 1);
+}
 
 .header__main {
   position: relative;
@@ -12,170 +26,438 @@ $msuxf-transition-timing: ease !default;
   max-width: 1400px;
   margin: 0 auto;
   padding: 20px;
-  text-align: left;
+  display: flex;
+  align-items: center; /* vertical center children (online panel + slider) */
+  gap: 20px;
+  z-index: 10;
+}
 
-  @media (max-width: 768px) {
-    padding: 10px;
-  }
+.layers {
+  perspective: 1000px;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.layers__container {
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--move-y)) rotateY(var(--move-x));
+  will-change: transform;
+  transition: transform var(--transition);
+}
+
+.layers__item {
+  position: absolute;
+  inset: -5vw;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.layer-1 {
+  transform: translateZ(-55px) scale(1.06);
+}
+
+.layer-2 {
+  transform: translateZ(80px) scale(.88);
+  pointer-events: none;
+}
+
+.slider .slide .hero-content {
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 60px;
+  padding-left: 36px;
+  padding-right: 12px;
+  min-width: 240px;
+  box-sizing: border-box;
+}
+
+.hero-content h2 {
+  font-family: 'Old Bastards', sans-serif;
+  font-size: 1.5rem;
+  font-weight: normal;
+  color: white;
+  text-align: left;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  margin: 0;
 }
 
 .slider {
   position: relative;
   width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  max-height: 600px;
-  border-radius: 16px;
+  flex: 1 1 auto;
+  height: 400px;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
 
-  @media (max-width: 1024px) {
-    aspect-ratio: 4 / 3;
-  }
+/* Online players panel (left of slider) */
+.online-players {
+  width: 140px;
+  min-width: 110px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #0e1a22 0%, #0b1216 100%); /* dark, tactical look */
+  border: 2px solid rgba(77,166,255,0.06); /* blue accent */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  border-radius: 8px;
+  color: #fff;
+  padding: 12px;
+  box-sizing: border-box;
+  z-index: 20;
+}
 
-  @media (max-width: 768px) {
-    aspect-ratio: 1 / 1;
-    border-radius: 12px;
+.online-players .op-inner {
+  text-align: center;
+}
+
+.online-players .op-label {
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: #dfe9ee;
+  margin-bottom: 6px;
+}
+
+.online-players .op-value {
+  /* Use Queen Rocker for the online players number */
+  font-family: 'Queen Rocker', 'Old Bastards', sans-serif;
+  font-size: 2rem;
+  color: #4da6ff; /* blue accent */
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.6);
+}
+
+.online-players .op-fallback {
+  font-family: 'Old Bastards', sans-serif;
+  font-size: 2rem;
+  color: #4da6ff;
+  padding: 6px 10px;
+  background: rgba(0,0,0,0.18);
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+/* Wheel number styles */
+.wheel-number .digit-slot {
+  width: 20px;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.wheel-number .digit-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.wheel-number .digit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* default wheel digit font (keeps existing look elsewhere) */
+  font-family: 'Old Bastards', sans-serif;
+  font-size: 1.25rem;
+  color: #4da6ff;
+  height: 34px;
+}
+
+/* Ensure WheelNumber inside the online-players box uses Queen Rocker */
+.online-players .wheel-number .digit,
+.header-online .wheel-number .digit {
+  font-family: 'Queen Rocker', 'Old Bastards', sans-serif;
+  color: #fff !important;
+}
+
+/* Sparkle-hover particle styles
+   Add the class `sparkle-hover` to any inline text element to enable
+   the falling sparkle effect on hover. Particles are created via JS and
+   use these classes for visuals and animation. */
+.sparkle-hover {
+  position: relative; /* container for absolute particles */
+  display: inline-block;
+  cursor: pointer;
+  overflow: visible; /* ensure particles can appear outside the text box */
+}
+
+.sparkle-particle {
+  /* particles appended to body and positioned fixed */
+  position: fixed;
+  /* default/fallback size — most particles set inline to 1-3px */
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0; /* start invisible; animation will fade in */
+  transform: translateY(0) scale(1);
+  will-change: transform, opacity;
+  z-index: 99999; /* render above everything */
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.35));
+  mix-blend-mode: screen;
+  animation-fill-mode: forwards;
+}
+
+/* Fade-out helper applied when clearing particles so they disappear smoothly */
+.sparkle-fadeout {
+  animation: none !important;
+  transition: opacity 700ms linear, transform 700ms linear !important;
+  opacity: 0 !important;
+  transform: translateY(12px) !important;
+}
+
+@keyframes sparkle-fall {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(1) translateX(0);
   }
+  10% {
+    opacity: 1;
+    transform: translateY(2px) scale(1.02) translateX(var(--tx, 0px));
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(6px) scale(1) translateX(var(--tx, 0px));
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98) translateX(var(--tx, 0px));
+  }
+}
+
+/* Header-specific variant to position the panel nicely in header */
+.header-online {
+  width: 140px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #082032 0%, #0b2433 100%);
+  border: 1px solid rgba(77,166,255,0.08);
+  border-radius: 6px;
+  margin-right: 12px;
+}
+
+.header-online .op-label { font-size: 11px; letter-spacing: 1.5px; color: #cfdfe6; }
+.header-online .op-value { display:flex; align-items:center; }
+
+/* New compact header players styling (icon + number + subtext) */
+.header-online {
+  padding: 8px 10px;
+  width: auto;
+  min-width: 92px;
+  height: 46px;
+  background: linear-gradient(180deg, rgba(12,24,36,0.9), rgba(6,16,24,0.9));
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+  border-radius: 8px;
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.header-online .op-icon { display:flex; align-items:center; justify-content:center; width:32px; }
+.header-online .op-body { display:flex; flex-direction:column; align-items:flex-start; line-height:1; }
+.header-online .op-value { font-family: 'Old Bastards', sans-serif; color: #4da6ff; font-size: 18px; }
+.header-online .op-sub { font-size: 10px; color: rgba(223,233,238,0.85); margin-top: 2px; letter-spacing: 0.6px; }
+
+/* Animated WiFi SVG styles (used in OnlinePlayers op-icon) */
+.wifi-svg {
+  width: 28px;
+  height: 20px;
+  display: block;
+}
+
+.wifi-arc {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.22;
+  transform-origin: 50% 50%;
+  animation: wifiPulse 2.6s infinite;
+}
+
+.wifi-arc.arc-outer { stroke: #dfe9ee; stroke-width: 1.2; animation-delay: 0.6s; opacity: 0.2; }
+.wifi-arc.arc-middle { stroke: #dfe9ee; stroke-width: 1.6; animation-delay: 0.28s; opacity: 0.28; }
+.wifi-arc.arc-inner { stroke: #4da6ff; stroke-width: 1.8; animation-delay: 0s; opacity: 0.95; }
+
+.wifi-dot { transform-origin: center; animation: wifiDot 2.6s infinite; }
+
+@keyframes wifiPulse {
+  0%   { opacity: 0.22; }
+  8%   { opacity: 1; }
+  22%  { opacity: 0.18; }
+  100% { opacity: 0.18; }
+}
+
+@keyframes wifiDot {
+  0%   { transform: translateY(0) scale(1); opacity: 1; }
+  10%  { transform: translateY(-2px) scale(1.06); opacity: 1; }
+  30%  { transform: translateY(0) scale(1); opacity: 0.82; }
+  100% { opacity: 0.82; }
+}
+
+@media (max-width: 1024px) {
+  .header-left .header-online { display: none; }
+}
+
+/* Hide the panel on small screens to avoid crowding */
+@media (max-width: 768px) {
+  .online-players { display: none; }
+}
+
+.slides {
+  display: flex;
+  width: 100%;
+  height: 100%;
 }
 
 .slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 70%;
-  position: absolute;
-  width: 100%;
-  top: 0;
-  left: 0;
-
-  &.active {
-    .slide__bg {
-      opacity: 1;
-      filter: blur(0);
-    }
-  }
+  flex: 0 0 100%;
+  position: relative;
 }
 
-.slide__bg {
-  position: absolute;
-  z-index: 0;
-  top: 0;
-  left: 0;
+.slide-image {
   width: 100%;
   height: 100%;
-  opacity: 0;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(10px);
-  transition: opacity 0.5s ease-in-out 0s, filter 0.5s ease-in-out 0.3s;
 }
 
-
-.slider__pagination {
+.slide-overlay {
   position: absolute;
-  bottom: 200px;
-  width: 100%;
-  text-align: center;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  z-index: 10;
-
-  @media (max-width: 768px) {
-    bottom: 3px;
-  }
-
-  &.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.slider__progress {
-  position: absolute;
-  bottom: 140px;
-  left: 25%;
-  width: 50%;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.2);
-  z-index: 5;
-
-  @media (max-width: 768px) {
-    height: 3px;
-  }
-}
-
-.slider__progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, #4CAF50, #8BC34A);
-  transition: width 0.05s linear;
-  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
-}
-
-.button {
-  position: relative;
-  display: inline-block;
-  padding: 12px 32px;
-  margin: 0 8px;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
-  line-height: 1;
-  font: 600 12px 'Montserrat', sans-serif;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  padding: 20px;
   color: white;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  cursor: pointer;
-  transition: all $msuxf-transition-duration $msuxf-transition-timing;
-  appearance: none;
+}
 
-  @media (max-width: 768px) {
-    padding: 10px 24px;
-    margin: 0 5px;
-    font-size: 10px;
-    letter-spacing: 1px;
+.slide-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  /* modern circular arrow button */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  color: white;
+  border: none;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.12s ease, box-shadow 0.12s ease;
+  z-index: 30;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.75);
+    transform: translateY(-50%) scale(1.03);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45);
   }
 
-  @media (max-width: 480px) {
-    padding: 8px 20px;
-    margin: 0 4px;
-    font-size: 9px;
+  &:active {
+    transform: translateY(-50%) scale(0.98);
+  }
+
+  &.prev {
+    left: 10px;
+  }
+
+  &.next {
+    right: 10px;
+  }
+}
+
+.nav-btn svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  stroke: #fff;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nav-btn:focus-visible {
+  outline: 3px solid rgba(255,255,255,0.18);
+  outline-offset: 4px;
+}
+
+.dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.3s ease;
+
+  &.active {
+    background: white;
   }
 
   &:hover {
-    color: $msuxf-background-dark;
-    background-color: rgba(255, 255, 255, 0.95);
-    border-color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.7);
+  }
+}
+
+@media (max-width: 768px) {
+  .header__main {
+    padding: 10px;
   }
 
-  &.active {
-    color: $msuxf-background-dark;
-    background-color: white;
-    border-color: white;
+  .slider {
+    height: 300px;
   }
 
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.25s ease,
-  border-color 0.25s ease, color 0.25s ease;
+  .hero-content h2 {
+    font-size: 1.5rem;
+  }
 
-  &.show {
-    opacity: 1;
-    transform: translateY(0);
+  .slider .slide .hero-content {
+  /* smaller badge for mobile - also stretched to fill */
+  background-size: 100% 100%;
+  height: 48px;
+    padding-left: 26px;
+    min-width: 180px;
+  }
 
-    &:nth-child(1) {
-      transition-delay: 0s;
-    }
-
-    &:nth-child(2) {
-      transition-delay: 0.1s;
-    }
+  .nav-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
   }
 }

@@ -1,5 +1,6 @@
 .header-container {
     position: relative;
+    margin-top: 25px;
 }
 
 .header {
@@ -9,7 +10,7 @@
     align-items: center;
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 100;
     min-height: 60px;
     box-sizing: border-box;
     background: transparent;
@@ -35,9 +36,17 @@
     flex: 1;
 }
 
+/* Position players component nicely when it's inside header-left */
+.header-left .header-online {
+    margin-left: 14px;
+    margin-right: 6px;
+    z-index: 1100;
+}
+
 .header-center {
     flex: 1;
     justify-content: center;
+    position: relative;
 }
 
 .header-right {
@@ -51,20 +60,26 @@
 }
 
 .main-nav {
-    display: flex;
-    gap: 1rem;
+    display: block;
     margin: 0;
     padding: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1150; /* make sure nav sits above nearby elements */
 }
 
 .nav-list {
     list-style: none;
     display: flex;
-    gap: 1rem;
-    background: rgba(255, 255, 255, 0.1);
+    gap: 22px; /* spacing between items so they don't stick */
+    align-items: center;
+    background: rgba(255, 255, 255, 0.08);
     border-radius: 9px;
     position: relative;
-    padding: 0;
+    padding: 6px 10px;
+    white-space: nowrap; /* keep items from wrapping */
 }
 
 .nav-underline {
@@ -81,12 +96,13 @@
 .nav-link {
     text-decoration: none;
     color: #ccc;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    padding: 0.5rem;
+    padding: 0.45rem 0.75rem;
     border-radius: 9px;
     transition: background-color 0.2s ease, color 0.2s ease;
     position: relative;
+    flex-shrink: 0; /* prevent shrinking when header gets cramped */
 }
 
 
@@ -182,6 +198,22 @@
     box-shadow: 0 3px 8px rgba(255, 107, 53, 0.4);
 }
 
+.header-video {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+    margin-left: 1rem;
+}
+
+.bonus-image {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) translateX(7vh);
+    height: 120px;
+    width: auto;
+}
+
 @media (max-width: 1024px) {
     .header {
         flex-direction: column;
@@ -209,6 +241,8 @@
 
     .main-nav {
         width: 100%;
+        position: static; /* restore normal flow for tablet/mobile layouts */
+        transform: none;
     }
 
     .nav-list {
@@ -288,4 +322,65 @@
     .nav-underline {
         display: none;
     }
+
+    .header-video {
+        height: 40px;
+        margin-left: 0.5rem;
+    }
+
+    .bonus-image {
+        height: 80px;
+    }
+
+    /* hide players panel on smaller screens to avoid clutter */
+    .header-left .header-online {
+        display: none;
+    }
+}
+
+/* Mobile-specific menu toggle and behavior */
+.mobile-toggle {
+    display: none;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.06);
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.mobile-toggle svg rect { fill: rgba(255,255,255,0.9); }
+
+@media (max-width: 768px) {
+    .mobile-toggle { display: inline-flex; }
+
+    /* Hide desktop nav by default on small screens */
+    .nav-list { display: none !important; }
+
+    /* When header-center has mobile-open class, show nav as a dropdown */
+    .header-center.mobile-open .nav-list.open {
+        display: flex !important;
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 8px;
+        right: 8px;
+        flex-direction: column;
+        gap: 8px;
+        background: linear-gradient(180deg, rgba(7,18,28,0.95), rgba(3,10,14,0.95));
+        padding: 12px;
+        border-radius: 10px;
+        z-index: 1100;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+
+    .header-center.mobile-open .nav-list.open .nav-link {
+        padding: 0.8rem 1rem;
+        text-align: left;
+        min-width: 0;
+    }
+
+    /* Slight adjustment to bonus image so it doesn't collide */
+    .bonus-image { transform: translateY(-50%) translateX(4vh); }
 }

@@ -1,6 +1,8 @@
 import Header from '../components/Header.jsx';
 import Player from '../components/Player.jsx';
 import Slider from '../components/Slider.jsx';
+import Footer from '../components/Footer.jsx';
+import ParticlesBackground from '../components/ParticlesBackground.jsx';
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import videoFile from '../assets/Композиция 1_2.mp4';
@@ -52,8 +54,9 @@ export default function MainPage() {
         }
     }, [location.pathname, navigate]);
 
-    return (
-        <div className="min-h-screen bg-black text-white">
+            return (
+        <div className="min-h-screen bg-black text-white flex flex-col">
+            {!showVideo && <ParticlesBackground />}
             {showHeader && <div className={`site-enter ${animateHeader ? 'site-enter-active' : ''}`}><Header /></div>}
             {showHeader && !isMobile && <div className={`site-enter ${animateHeader ? 'site-enter-active' : ''}`}><Slider showLabels={showLabels} /></div>}
             {isMobile && showHeader && (
@@ -77,7 +80,7 @@ export default function MainPage() {
                     playbackRate={1.0}
                 />
             )}
-
+            {!showVideo && <Footer />}
         </div>
     );
 }
