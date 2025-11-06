@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import rouletteGif from '../assets/img/roulette.webp';
 import luckyJetGif from '../assets/img/luckyjet.webp';
 import slotsImg from '../assets/img/slots.jpg';
-import table from '../assets/img/table.png';
 import './slider.scss';
 import { clearAllSparkles } from '../utils/sparkles';
 
