@@ -86,11 +86,11 @@ export default function Header() {
                         <div className="nav-underline" style={{ width: underline.width + 'px', left: underline.left + 'px', opacity: underline.opacity }}></div>
                     </ul>
                 </nav>
-                <img src={bonus} alt="Bonus" className="bonus-image" />
 
             </div>
 
             <div className="header-right">
+                <img src={bonus} alt="Bonus" className="bonus-image" />
                 <button
                     className="mobile-toggle"
                     aria-controls="main-navigation"
