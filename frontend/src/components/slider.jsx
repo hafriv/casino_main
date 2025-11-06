@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import rouletteGif from '../assets/roulette.gif';
-import luckyJetGif from '../assets/lucky_jet.gif';
+import rouletteGif from '../assets/img/roulette.webp';
+import luckyJetGif from '../assets/img/luckyjet.webp';
+import slotsImg from '../assets/img/slots.jpg';
 import table from '../assets/img/table.png';
 import './slider.scss';
 import { clearAllSparkles } from '../utils/sparkles';
@@ -19,6 +20,12 @@ const sliderData = [
     link: '/roulette',
     title: 'Roulette',
   },
+  {
+    id: 'slide-3',
+    image: slotsImg,
+    link: '/slots',
+    title: 'Slots',
+  },
 ];
 
 const Slider = ({ showLabels = true }) => {
@@ -28,7 +35,7 @@ const Slider = ({ showLabels = true }) => {
   const goToSlide = (index) => {
     if (index !== currentIndex) {
       // clear any active sparkles before changing slides
-      try { clearAllSparkles(); } catch (e) { /* ignore if not available */ }
+      try { clearAllSparkles(); } catch { /* ignore if not available */ }
       setIsTransitioning(true);
       setCurrentIndex(index);
     }
@@ -91,7 +98,7 @@ const Slider = ({ showLabels = true }) => {
         >
           {sliderData.map((slide) => (
             <div key={slide.id} className="slide">
-              <Link to={slide.link}>
+              <Link to={`/redirect?to=${slide.link}`}>
                 <div className="layers">
                   <div className="layers__container">
                     <div
@@ -102,11 +109,10 @@ const Slider = ({ showLabels = true }) => {
                     />
                   </div>
                 </div>
-                <div className="hero-content" style={{
-                  backgroundImage: `url(${table})`
-                }}>
+                <div className="hero-content">
 
-                  <h2 className="sparkle-hover">{slide.title}</h2>
+                  <h2
+                  className="sparkle-hover hero-text">{slide.title}</h2>
                 </div>
               </Link>
             </div>

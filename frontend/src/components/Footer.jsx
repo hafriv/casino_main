@@ -18,10 +18,10 @@ export default function Footer() {
 
         <nav className="footer-center" aria-label="Footer navigation">
           <ul className="footer-menu">
-            <li><Link to="/home">Home</Link></li>
-            <li><Link to="/games">Casino</Link></li>
-            <li><Link to="/bonus">Free money</Link></li>
-            <li><Link to="/sports">Sports</Link></li>
+            <li><Link to={`/redirect?to=/home`}>Home</Link></li>
+            <li><Link to={`/redirect?to=/games`}>Casino</Link></li>
+            <li><Link to={`/redirect?to=/bonus`}>Free money</Link></li>
+            <li><Link to={`/redirect?to=/sports`}>Sports</Link></li>
           </ul>
         </nav>
 
@@ -38,8 +38,8 @@ export default function Footer() {
         <div className="container legal-inner">
           <span>© 2025 XPOW Casino. All rights reserved.</span>
           <div className="legal-links">
-            <Link to="/privacy">Privacy Policy</Link>
-            <Link to="/terms">Terms of Service</Link>
+            <Link to={`/redirect?to=/privacy`}>Privacy Policy</Link>
+            <Link to={`/redirect?to=/terms`}>Terms of Service</Link>
           </div>
         </div>
       </div>

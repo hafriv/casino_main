@@ -17,8 +17,10 @@
     "concurrently": "^9.2.1",
     "granim": "^2.0.0",
     "react": "^19.1.1",
+    "react-casino-roulette": "github:dozsolti/react-casino-roulette",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.1",
+    "react-slot-machine": "^1.0.0",
     "tsparticles": "^3.9.1"
   },
   "devDependencies": {
