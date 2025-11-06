@@ -79,10 +79,10 @@ export default function Header() {
                 {/* Главное меню */}
                 <nav id="main-navigation" className="main-nav" aria-label="Main navigation">
                     <ul className={`nav-list ${mobileOpen ? 'open' : ''}`} ref={ulRef} onMouseLeave={handleMouseLeave}>
-                        <li onMouseEnter={handleMouseEnter}><Link to="/home" onClick={() => setMobileOpen(false)} className={`nav-link sparkle-hover ${location.pathname === '/home' ? 'nav-link-active' : ''}`}>Home</Link></li>
-                        <li onMouseEnter={handleMouseEnter}><Link to="/games" onClick={() => setMobileOpen(false)} className="nav-link sparkle-hover">Casino</Link></li>
-                        <li onMouseEnter={handleMouseEnter}><Link to="/bonus" onClick={() => setMobileOpen(false)} className="nav-link sparkle-hover">Free money</Link></li>
-                        <li onMouseEnter={handleMouseEnter}><Link to="/sports" onClick={() => setMobileOpen(false)} className="nav-link sparkle-hover">Sports</Link></li>
+                        <li onMouseEnter={handleMouseEnter}><Link to={`/redirect?to=/home`} onClick={() => setMobileOpen(false)} className={`nav-link sparkle-hover ${location.pathname === '/home' ? 'nav-link-active' : ''}`}>Home</Link></li>
+                        <li onMouseEnter={handleMouseEnter}><Link to={`/redirect?to=/games`} onClick={() => setMobileOpen(false)} className="nav-link sparkle-hover">Casino</Link></li>
+                        <li onMouseEnter={handleMouseEnter}><Link to={`/redirect?to=/bonus`} onClick={() => setMobileOpen(false)} className="nav-link sparkle-hover">Free money</Link></li>
+                        <li onMouseEnter={handleMouseEnter}><Link to={`/redirect?to=/sports`} onClick={() => setMobileOpen(false)} className="nav-link sparkle-hover">Sports</Link></li>
                         <div className="nav-underline" style={{ width: underline.width + 'px', left: underline.left + 'px', opacity: underline.opacity }}></div>
                     </ul>
                 </nav>
@@ -115,13 +115,13 @@ export default function Header() {
                 <div className="sub-nav">
                     <ul className="sub-list">
                 <li>
-                    <Link to="/home" className="sub-link sub-link-1 sparkle-hover">Lobby</Link>
+                    <Link to={`/redirect?to=/home`} className="sub-link sub-link-1 sparkle-hover">Lobby</Link>
                 </li>
                 <li>
-                    <Link to="/games" className="sub-link sub-link-2 sparkle-hover">Live</Link>
+                    <Link to={`/redirect?to=/games`} className="sub-link sub-link-2 sparkle-hover">Live</Link>
                 </li>
                 <li>
-                    <Link to="/games" className="sub-link sub-link-3 sparkle-hover">Rapid</Link>
+                    <Link to={`/redirect?to=/games`} className="sub-link sub-link-3 sparkle-hover">Rapid</Link>
                 </li>
                     </ul>
                 </div>

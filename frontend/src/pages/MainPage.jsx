@@ -64,10 +64,10 @@ export default function MainPage() {
                     <div className="mobile-menu">
                         <nav className="mobile-nav">
                             <ul>
-                                <li><a href="#home">Home</a></li>
-                                <li><a href="#casino">Casino</a></li>
-                                <li><a href="#bonus">Free Money</a></li>
-                                <li><a href="#sports">Sports</a></li>
+                                <li><button onClick={() => navigate('/redirect?to=/home')}>Home</button></li>
+                                <li><button onClick={() => navigate('/redirect?to=/games')}>Casino</button></li>
+                                <li><button onClick={() => navigate('/redirect?to=/bonus')}>Free Money</button></li>
+                                <li><button onClick={() => navigate('/redirect?to=/sports')}>Sports</button></li>
                             </ul>
                         </nav>
                     </div>
