@@ -9,7 +9,7 @@ import facebook from '../assets/social/facebook_icon.png';
 export default function Footer() {
   return (
     <footer className="site-footer">
-      <div className="footer-bg">{/* full-width background strip */}</div>
+      <div className="footer-bg"></div>
       <div className="container footer-inner">
         <div className="footer-left">
           <img src={logo} alt="XPOW Casino" className="ft-logo" />

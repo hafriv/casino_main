@@ -3,6 +3,7 @@ import './Header.css';
 import { Link, useLocation } from 'react-router-dom';
 import Granim from 'granim';
 import OnlinePlayers from './OnlinePlayers';
+import AuthModal from './AuthModal';
 import logo from '../assets/logo.png';
 import bonus from '../assets/bonus.gif';
 
@@ -11,8 +12,30 @@ export default function Header() {
     const [underline, setUnderline] = useState({ width: 0, left: 0, opacity: 0 });
     const ulRef = useRef(null);
     const canvasRef = useRef(null);
-    // const [rightUnderline, setRightUnderline] = useState({ width: 0, left: 0, opacity: 0 });
-    // const ulRightRef = useRef(null);
+    const [authModalOpen, setAuthModalOpen] = useState(false);
+    const [authMode, setAuthMode] = useState('login');
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('user'));
+    const [balance, setBalance] = useState(0);
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            setBalance(Number(user.balance || 0));
+        }
+    }, []);
+
+    useEffect(() => {
+        const handleBalanceUpdate = () => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                setBalance(Number(user.balance || 0));
+            }
+        };
+
+        document.addEventListener('balanceUpdated', handleBalanceUpdate);
+        return () => document.removeEventListener('balanceUpdated', handleBalanceUpdate);
+    }, []);
+
 
     useEffect(() => {
         if (canvasRef.current) {
@@ -32,7 +55,8 @@ export default function Header() {
         }
     }, []);
 
-    // Header background - just for styling
+
+
     const HeaderBackground = () => {
         return null;
     };
@@ -58,6 +82,38 @@ export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
     const toggleMobile = () => setMobileOpen(v => !v);
 
+    const handleOpenAuth = (mode) => {
+        setAuthMode(mode);
+        setAuthModalOpen(true);
+    };
+
+    const handleCloseAuth = () => {
+        setAuthModalOpen(false);
+        setIsLoggedIn(!!localStorage.getItem('user'));
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            setBalance(user.balance);
+        } else {
+            setBalance(0);
+        }
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        setIsLoggedIn(false);
+    };
+
+    useEffect(() => {
+        const handleOpenRegistrationModal = () => {
+            handleOpenAuth('register');
+        };
+
+        document.addEventListener('openRegistrationModal', handleOpenRegistrationModal);
+        return () => {
+            document.removeEventListener('openRegistrationModal', handleOpenRegistrationModal);
+        };
+    }, []);
+
 
 
     return (
@@ -71,7 +127,6 @@ export default function Header() {
                 <div className="logo">
                     <img src={logo} alt="XPOW Casino" className="logo-image" />
                 </div>
-                {/* Players panel moved to the left side */}
                 <OnlinePlayers />
             </div>
 
@@ -105,11 +160,18 @@ export default function Header() {
                     </svg>
                 </button>
                 <div className="actions">
-                    <button className="btn-login">Login</button>
-                    <button className="btn-registration">Registration</button>
+                    {isLoggedIn ? (
+                        <>
+                            <span className="balance-display">Balance: ${balance}</span>
+                            <button className="btn-logout" onClick={handleLogout}>Logout</button>
+                        </>
+                    ) : (
+                        <>
+                            <button className="btn-login" onClick={() => handleOpenAuth('login')}>Login</button>
+                            <button className="btn-registration" onClick={() => handleOpenAuth('register')}>Registration</button>
+                        </>
+                    )}
                 </div>
-
-                {/* (WiFi icon removed — replaced inside OnlinePlayers) */}
 
                 {/* Дополнительное меню */}
                 <div className="sub-nav">
@@ -128,6 +190,7 @@ export default function Header() {
             </div>
             </header>
         </div>
+        <AuthModal isOpen={authModalOpen} onClose={handleCloseAuth} mode={authMode} />
         </>
     );
 }

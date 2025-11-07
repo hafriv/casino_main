@@ -36,7 +36,6 @@
     flex: 1;
 }
 
-/* Position players component nicely when it's inside header-left */
 .header-left .header-online {
     margin-left: 14px;
     margin-right: 6px;
@@ -67,19 +66,19 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1150; /* make sure nav sits above nearby elements */
+    z-index: 1150;
 }
 
 .nav-list {
     list-style: none;
     display: flex;
-    gap: 22px; /* spacing between items so they don't stick */
+    gap: 22px;
     align-items: center;
     background: rgba(255, 255, 255, 0.08);
     border-radius: 9px;
     position: relative;
     padding: 6px 10px;
-    white-space: nowrap; /* keep items from wrapping */
+    white-space: nowrap;
 }
 
 .nav-underline {
@@ -102,7 +101,7 @@
     border-radius: 9px;
     transition: background-color 0.2s ease, color 0.2s ease;
     position: relative;
-    flex-shrink: 0; /* prevent shrinking when header gets cramped */
+    flex-shrink: 0;
 }
 
 
@@ -141,6 +140,28 @@
 .btn-registration:hover {
     background: #007bff;
     color: white;
+}
+
+.btn-logout {
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    padding: 0.7rem;
+}
+
+.btn-logout:hover {
+    background: #c82333;
+}
+
+.balance-display {
+    color: white;
+    font-weight: bold;
+    margin-right: 0.5rem;
+    font-size: 1rem;
 }
 
 .sub-nav {
@@ -217,7 +238,7 @@
 
 @media (max-width: 1724px) {
     .bonus-image {
-       display: none;
+       opacity: 0;
     }
     }
 @media (max-width: 1200px) {
@@ -247,7 +268,7 @@
 
     .main-nav {
         width: 100%;
-        position: static; /* restore normal flow for tablet/mobile layouts */
+        position: static;
         transform: none;
     }
 
@@ -338,7 +359,7 @@
         display: none;
     }
 
-    /* hide players panel on smaller screens to avoid clutter */
+
     .header-left .header-online {
         display: none;
     }
@@ -362,10 +383,10 @@
 @media (max-width: 768px) {
     .mobile-toggle { display: inline-flex; }
 
-    /* Hide desktop nav by default on small screens */
+
     .nav-list { display: none !important; }
 
-    /* When header-center has mobile-open class, show nav as a dropdown */
+
     .header-center.mobile-open .nav-list.open {
         display: flex !important;
         position: absolute;
@@ -387,5 +408,4 @@
         min-width: 0;
     }
 
-    /* bonus-image is now positioned relatively in tablet/mobile layout */
 }

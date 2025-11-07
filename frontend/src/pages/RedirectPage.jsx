@@ -8,10 +8,8 @@ export default function RedirectPage() {
 
     useEffect(() => {
         if (to) {
-            // Pass any additional params if needed, but for now just redirect
             navigate(to, { replace: true });
         } else {
-            // Default to home if no 'to' param
             navigate('/home', { replace: true });
         }
     }, [to, navigate]);

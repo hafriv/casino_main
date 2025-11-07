@@ -3,6 +3,7 @@ import Player from '../components/Player.jsx';
 import Slider from '../components/Slider.jsx';
 import Footer from '../components/Footer.jsx';
 import ParticlesBackground from '../components/ParticlesBackground.jsx';
+import RegisterPrompt from '../components/RegisterPrompt.jsx';
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import videoFile from '../assets/Композиция 1_2.mp4';
@@ -48,13 +49,17 @@ export default function MainPage() {
         setShowLabels(true);
     };
 
+    const handleRegisterFromPrompt = () => {
+        document.dispatchEvent(new CustomEvent('openRegistrationModal'));
+    };
+
     useEffect(() => {
         if (location.pathname !== '/home') {
             navigate('/home', { replace: true });
         }
     }, [location.pathname, navigate]);
 
-            return (
+    return (
         <div className="min-h-screen bg-black text-white flex flex-col">
             {!showVideo && <ParticlesBackground />}
             {showHeader && <div className={`site-enter ${animateHeader ? 'site-enter-active' : ''}`}><Header /></div>}
@@ -81,6 +86,7 @@ export default function MainPage() {
                 />
             )}
             {!showVideo && <Footer />}
+            <RegisterPrompt onRegisterClick={handleRegisterFromPrompt} />
         </div>
     );
 }

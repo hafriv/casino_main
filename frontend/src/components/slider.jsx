@@ -33,8 +33,7 @@ const Slider = ({ showLabels = true }) => {
 
   const goToSlide = (index) => {
     if (index !== currentIndex) {
-      // clear any active sparkles before changing slides
-      try { clearAllSparkles(); } catch { /* ignore if not available */ }
+      try { clearAllSparkles(); } catch { /* */ }
       setIsTransitioning(true);
       setCurrentIndex(index);
     }
