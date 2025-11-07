@@ -21,6 +21,8 @@ export default function Header() {
         const user = JSON.parse(localStorage.getItem('user'));
         if (user) {
             setBalance(Number(user.balance || 0));
+            // Dispatch event to notify other components
+            setTimeout(() => document.dispatchEvent(new Event('balanceUpdated')), 0);
         }
     }, []);
 
@@ -96,6 +98,8 @@ export default function Header() {
         } else {
             setBalance(0);
         }
+        // Dispatch event to notify other components
+        document.dispatchEvent(new Event('balanceUpdated'));
     };
 
     const handleLogout = () => {

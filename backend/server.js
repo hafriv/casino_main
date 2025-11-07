@@ -197,10 +197,9 @@ app.get("/api/players/online", async (req, res) => {
 app.get("/api/bets", async (req, res) => {
 	try {
 		const result = await pool.query(`
-      SELECT b.*, u.username, g.name AS game_name
+      SELECT b.*, u.username
       FROM bets b
       JOIN users u ON b.user_id = u.id
-      JOIN games g ON b.game_id = g.id
       ORDER BY b.id DESC
     `);
 		res.json(result.rows);
