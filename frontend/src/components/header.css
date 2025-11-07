@@ -408,4 +408,6 @@
         min-width: 0;
     }
 
+    /* Slight adjustment to bonus image so it doesn't collide */
+    .bonus-image { transform: translateY(-50%) translateX(4vh); }
 }

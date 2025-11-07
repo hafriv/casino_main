@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { RouletteWheel, RouletteTable, ChipList, useRoulette } from 'react-casino-roulette';
 import 'react-casino-roulette/dist/index.css';
-import Granim from 'granim';
-import Header from '../components/Header.jsx';
-import Footer from '../components/Footer.jsx';
+import ParticlesBackground from '../components/ParticlesBackground.jsx';
 import Bronze from '../assets/badges/Bronze.png';
 import Gold from '../assets/badges/Gold.png';
 import Platinum from '../assets/badges/Platinum.png';
 import Diamond from '../assets/badges/Diamond.png';
+import rouletteBanner from '../assets/roulette.gif';
 
 import '../App.css';
 
@@ -285,69 +284,54 @@ export default function Roulette() {
     }, []);
 
     return (
-        <div className="min-h-screen text-white flex flex-col relative overflow-hidden">
+        <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4">
+            <div className="flex flex-col items-center space-y-4">
+                <h1 className="text-4xl font-bold mb-4">Roulette</h1>
 
-            <Header />
+                {/* Chip Selection */}
+                <ChipList
+                    chips={chips}
+                    selectedChip={selectedChip}
+                    onChipPressed={setSelectedChip}
+                />
 
-            <canvas ref={canvasRef} className="roulette-canvas"></canvas>
+                {/* Table */}
+                <RouletteTable
+                    chips={chips}
+                    bets={bets}
+                    onBet={onBet(Number(selectedChip))}
+                    layoutType="american"
+                    readOnly={readOnly}
+                />
 
+                {/* Wheel */}
+                <RouletteWheel
+                    start={wheelStart}
+                    winningBet={winningBet}
+                    onSpinningEnd={handleEndSpin}
+                    layoutType="american"
+                    spinLaps={3}
+                    spinDuration={3}
+                />
 
-            <div className="light"></div>
-
-            <div className="button-light">
-                <div></div>
-                <div></div>
-            </div>
-            <main className="flex-grow flex flex-col items-center justify-center p-4 sm:p-8">
-                <div className="bg-black bg-opacity-50 p-4 sm:p-8 rounded-lg max-w-6xl w-full">
-                    <div className="flex flex-col lg:flex-row items-center justify-center lg:space-x-8 space-y-8 lg:space-y-0">
-                        <div className="order-2 lg:order-1 w-full lg:w-auto">
-                            <div className="overflow-x-auto"
-                                 style = {{
-                                     display: 'flex',
-                                     flexWrap: 'wrap',
-                                     justifyContent: 'center',
-                                     alignItems: 'center',
-                                 }}>
-                                <RouletteTable
-                                    chips={chips}
-                                    bets={bets}
-                                    onBet={customOnBet(Number(selectedChip))}
-                                    layoutType="american"
-                                    readOnly={readOnly}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="order-1 lg:order-2 flex flex-col items-center w-full lg:w-auto">
-                            <ChipList
-                                chips={chips}
-                                selectedChip={selectedChip}
-                                onChipPressed={setSelectedChip}
-                            />
-                            <div className="mt-6 sm:mt-8">
-                                <RouletteWheel
-                                    start={wheelStart}
-                                    winningBet={winningBet}
-                                    onSpinningEnd={handleEndSpin}
-                                    layoutType="american"
-                                    spinLaps={3}
-                                    spinDuration={3}
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="nav">
-                        <button className="button" onClick={doSpin} disabled={wheelStart || !hasBets}>
-                            <div className="frame">
-                                <span className="button-text">{wheelStart ? 'Spinning...' : `Spin (${totalBetAmount}$)`}</span>
-                            </div>
-                        </button>
-                    </div>
+                {/* Controls */}
+                <div className="flex space-x-4">
+                    <button
+                        onClick={doSpin}
+                        disabled={wheelStart || !hasBets}
+                        className="px-4 py-2 bg-blue-600 rounded disabled:opacity-50"
+                    >
+                        Spin ({total}$)
+                    </button>
+                    <button
+                        onClick={clearBets}
+                        disabled={readOnly}
+                        className="px-4 py-2 bg-red-600 rounded"
+                    >
+                        Clear Bets
+                    </button>
                 </div>
-            </main>
-            <Footer />
+            </div>
         </div>
     );
 }
