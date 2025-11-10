@@ -181,9 +181,9 @@ export default function Header() {
             <header className="header">
             <div className="header-left">
                 {/* Логотип */}
-                <div className="logo">
+                <Link to="/redirect?to=/home" className="logo">
                     <img src={logo} alt="XPOW Casino" className="logo-image" />
-                </div>
+                </Link>
                 <OnlinePlayers />
                 <img 
                     src={bonus} 

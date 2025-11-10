@@ -95,7 +95,8 @@ src: url('../assets/fonts/oldb.ttf') format('truetype');
 }
 
 .slide:nth-child(3) .hero-content {
-  left: 100px;
+  left: auto;
+  right: 20px;
 }
 
 .slider {
