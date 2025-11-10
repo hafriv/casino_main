@@ -31,5 +31,17 @@
 }
 .orbc2 {
     display: flex;
-    gap: 5px;
+    gap: 10px;
+}
+
+.paytable {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.tableelem {
+    border-radius: 8px;
 }

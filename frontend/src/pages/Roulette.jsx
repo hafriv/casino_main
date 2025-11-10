@@ -450,7 +450,7 @@ export default function Roulette() {
                             disabled={wheelStart || !hasBets}
                             className="relative px-24 py-8 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold rounded-full shadow-lg hover:from-green-600 hover:to-green-700 transform hover:scale-110 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none overflow-hidden text-2xl"
                         >
-                            <span className="relative z-10 btn1">Spin ({totalBetAmount}$)</span>
+                            <span className="btn1">Spin ({totalBetAmount}$)</span>
                             <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-500 opacity-0 hover:opacity-20 transition-opacity duration-200"></div>
                         </button>
                         <button
@@ -461,8 +461,7 @@ export default function Roulette() {
                             disabled={readOnly}
                             className="relative px-24 py-8 bg-gradient-to-r from-red-500 to-red-600 text-white font-bold rounded-full shadow-lg hover:from-red-600 hover:to-red-700 transform hover:scale-110 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none overflow-hidden text-2xl"
                         >
-                            <span className="relative z-10 btn1"> Clear Bets</span>
-                            <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-red-500 opacity-0 hover:opacity-20 transition-opacity duration-200"></div>
+                            <span className="btn1">Clear Bets</span>
                         </button>
                     </div>
                 </div>

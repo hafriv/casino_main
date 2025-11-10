@@ -488,13 +488,12 @@ export default function Slots() {
                     <div className="w-48 h-1.5 rounded-full" style={{background: 'linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.8), rgba(236, 72, 153, 0.8), transparent)', boxShadow: '0 0 20px rgba(168, 85, 247, 0.5)'}}></div>
 
                     {/* Paytable */}
-                    <div className="rounded-2xl p-8 shadow-2xl mt-16" style={{background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 107, 53, 0.2)'}}>
+                    <div className=" rounded-2xl p-8 shadow-2xl mt-16" style={{background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 107, 53, 0.2)'}}>
                         <div className="rounded-xl p-7 max-w-md mx-auto" style={{background: 'rgba(20, 20, 40, 0.7)', border: '2px solid rgba(255, 107, 53, 0.4)'}}>
-                            <div className="text-center text-lg mb-6 font-semibold"
+                            <div className=" text-center text-lg mb-6 font-semibold"
                                  style={{fontFamily: 'Orbitron, sans-serif', color: '#ff6b35', textShadow: '0 0 10px rgba(255, 107, 53, 0.6)'}}>
-                                PAYTABLE
                             </div>
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="paytable grid grid-cols-2 gap-4">
                                 {[
                                     { symbol: 'cherry', label: 'x2' },
                                     { symbol: 'pear', label: 'x4' },
@@ -503,9 +502,9 @@ export default function Slots() {
                                     { symbol: 'fig', label: 'x12' },
                                     { symbol: 'diamond', label: 'x20' }
                                 ].map((item, idx) => (
-                                    <div key={idx} className="flex items-center justify-center gap-3 p-4 rounded-lg" style={{background: 'rgba(255, 107, 53, 0.08)', border: '1px solid rgba(255, 107, 53, 0.2)'}}>
+                                    <div key={idx} className="tableelem flex items-center justify-center gap-3 p-4 rounded-lg" style={{background: 'rgba(255, 107, 53, 0.08)', border: '1px solid rgba(255, 107, 53, 0.2)'}}>
                                         <img src={SYMBOL_IMAGES[item.symbol]} alt={item.symbol} style={{width: '52px', height: '52px', objectFit: 'contain', filter: 'drop-shadow(0 0 4px rgba(255, 215, 0, 0.3))'}} />
-                                        <span className="font-black text-base" style={{color: '#ffff00', textShadow: '0 0 8px rgba(255, 255, 0, 0.6)'}}>
+                                        <span className="tableelem  font-black text-base" style={{color: '#ffff00', textShadow: '0 0 8px rgba(255, 255, 0, 0.6)'}}>
                                             {item.label}
                                         </span>
                                     </div>
@@ -525,12 +524,6 @@ export default function Slots() {
 
                     {/* Bet Controls */}
                     <div className="rounded-3xl p-8 shadow-2xl backdrop-blur-sm" style={{background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%)', border: '2px solid rgba(168, 85, 247, 0.4)', boxShadow: '0 0 40px rgba(168, 85, 247, 0.3), 0 0 60px rgba(236, 72, 153, 0.2)'}}>
-                        <div className="text-center mb-6">
-                            <span className="font-black uppercase tracking-widest text-lg"
-                                  style={{fontFamily: 'Orbitron, sans-serif', color: '#ff6b35', textShadow: '0 0 10px rgba(255, 107, 53, 0.6)'}}>
-                                🎲 Adjust Your Bet
-                            </span>
-                        </div>
                         <div className="orbc">
                             <div className="orbc2">
                                 <button
