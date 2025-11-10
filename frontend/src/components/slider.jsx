@@ -136,15 +136,21 @@ const Slider = ({ showLabels = true }) => {
           </svg>
         </button>
 
-        <div className="dots">
-          {sliderData.map((_, index) => (
-            <button
-              key={index}
-              className={`dot ${index === currentIndex ? 'active' : ''}`}
-              onClick={() => goToSlide(index)}
-            />
-          ))}
-        </div>
+        {/*<div className="dots">*/}
+        {/*  {sliderData.map((_, index) => (*/}
+        {/*    <button*/}
+        {/*        style={{*/}
+        {/*          backgroundColor: "#000",*/}
+        {/*          borderRadius: 7,*/}
+        {/*          borderWidth: 0.5,*/}
+        {/*          transform: `scale(0.9)`,*/}
+        {/*        }}*/}
+        {/*      key={index}*/}
+        {/*      className={`dot ${index === currentIndex ? 'active' : ''}`}*/}
+        {/*      onClick={() => goToSlide(index)}*/}
+        {/*    />*/}
+        {/*  ))}*/}
+        {/*</div>*/}
       </div>
     </div>
   );
