@@ -38,6 +38,52 @@ const PAYTABLE = {
     'coconut': 40
 };
 
+const WheelNumber = ({ value, digitHeight = 28, duration = 600 }) => {
+    const [digits, setDigits] = useState(String(value).split(''));
+
+    useEffect(() => {
+        setDigits(String(value).split(''));
+    }, [value]);
+
+    return (
+        <div className="wheel-number" style={{ display: 'inline-flex', gap: 4 }}>
+            {digits.map((d, i) => {
+                const digitValue = parseInt(d, 10);
+
+                if (Number.isNaN(digitValue)) {
+                    return (
+                        <div className="digit-static" key={`static-${i}`} style={{ height: digitHeight }}>
+                            {d}
+                        </div>
+                    );
+                }
+
+                return (
+                    <div className="digit-slot" key={i} style={{ height: digitHeight }}>
+                        <div
+                            className="digit-list"
+                            style={{
+                                transform: `translateY(-${digitValue * digitHeight + digitHeight * 10}px)`,
+                                transition: `transform ${duration}ms cubic-bezier(.2,.8,.2,1)`
+                            }}
+                        >
+                            {Array.from({ length: 3 }).map((_, cycle) => (
+                                <React.Fragment key={cycle}>
+                                    {Array.from({ length: 10 }).map((__, n) => (
+                                        <div className="digit" key={`${cycle}-${n}`} style={{ height: digitHeight }}>
+                                            {n}
+                                        </div>
+                                    ))}
+                                </React.Fragment>
+                            ))}
+                        </div>
+                    </div>
+                );
+            })}
+        </div>
+    );
+};
+
 // Reel Component
 const Reel = ({ symbols, isSpinning, delay = 0 }) => {
     const reelRef = useRef(null);
@@ -85,6 +131,8 @@ export default function Slots() {
     const [winMessage, setWinMessage] = useState('');
     const spinTimeoutRef = useRef(null);
     const autoSpinIntervalRef = useRef(null);
+
+    const asWheelValue = (val) => Math.max(0, Math.floor(Number.isFinite(val) ? val : Number(val) || 0));
 
     const _spinSoundRef = useRef(new Audio());
     const _winSoundRef = useRef(new Audio());
@@ -219,13 +267,12 @@ export default function Slots() {
             alert('Error updating balance on server. Balance has been reset.');
         });
 
-        // Log bet
         fetch('/api/bets', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 user_id: userId,
-                game_id: 4, // Slots (from database games table)
+                game_id: 4,
                 amount: bet,
                 result: winAmount > 0 ? 'win' : 'lose',
                 payout: winAmount
@@ -243,7 +290,6 @@ export default function Slots() {
 
         setIsSpinning(false);
 
-        // Continue auto spin if enabled
         if (autoSpin && finalBalance >= bet) {
             autoSpinIntervalRef.current = setTimeout(() => {
                 spin();
@@ -289,12 +335,10 @@ export default function Slots() {
 
     return (
         <div className="min-h-screen text-white overflow-hidden relative" style={{background: 'linear-gradient(135deg, #001a33 0%, #003366 100%)'}}>
-            {/* Slots Background Image */}
             <div className="fixed inset-0 pointer-events-none opacity-8 z-0" style={{backgroundImage: `url(${slotsImage})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed'}}></div>
 
             <Header />
 
-            {/* Animated Background Elements */}
             <div className="fixed inset-0 pointer-events-none z-0">
                 <div className="absolute top-20 left-10 w-32 h-32 bg-blue-900 rounded-full opacity-10 animate-pulse" style={{boxShadow: '0 0 40px rgba(77, 166, 255, 0.6)'}}></div>
                 <div className="absolute top-40 right-20 w-24 h-24 bg-blue-700 rounded-full opacity-10 animate-pulse delay-1000" style={{boxShadow: '0 0 40px rgba(77, 166, 255, 0.6)'}}></div>
@@ -305,7 +349,6 @@ export default function Slots() {
             <div className="relative z-10 flex flex-col items-center justify-center p-4 min-h-[calc(100vh-200px)]" style={{backgroundColor: '#000000'}}>
                 <div className="flex flex-col items-center space-y-8">
 
-                    {/* Casino Title */}
                     <div className="text-center mb-8">
                         <h1 className="text-7xl font-black mb-2 animate-pulse drop-shadow-2xl"
                             style={{fontFamily: 'Orbitron, sans-serif', backgroundImage: 'linear-gradient(to right, #a855f7, #ec4899, #ef4444)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', textShadow: '0 0 50px rgba(168, 85, 247, 0.8), 0 0 100px rgba(236, 72, 153, 0.5)'}}>
@@ -316,7 +359,6 @@ export default function Slots() {
                         </div>
                     </div>
 
-                    {/* Stats Panel */}
                     <div className="rounded-3xl p-8 shadow-2xl backdrop-blur-sm" style={{background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%)', border: '2px solid rgba(168, 85, 247, 0.4)', boxShadow: '0 0 40px rgba(168, 85, 247, 0.3), 0 0 60px rgba(236, 72, 153, 0.2)'}}>
                         <div className="grid grid-cols-3 gap-8 text-center">
                             <div className="space-y-3 px-4 py-3 rounded-2xl" style={{background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%)', border: '1px solid rgba(34, 211, 238, 0.3)'}}>
@@ -324,9 +366,10 @@ export default function Slots() {
                                      style={{fontFamily: 'Orbitron, sans-serif', color: '#00ffff', textShadow: '0 0 10px rgba(0, 255, 255, 0.6)'}}>
                                     💰 Balance
                                 </div>
-                                <div className="text-4xl font-black animate-pulse"
-                                     style={{fontFamily: 'Orbitron, sans-serif', color: '#00ffff', textShadow: '0 0 15px rgba(0, 255, 255, 0.8)'}}>
-                                    ${balance.toLocaleString()}
+                                <div className="text-4xl font-black animate-pulse balance-display"
+                                     style={{fontFamily: 'Orbitron, sans-serif', textShadow: '0 0 15px rgba(0, 255, 255, 0.8)'}}>
+                                    <span className="currency-symbol">$</span>
+                                    <WheelNumber value={asWheelValue(balance)} digitHeight={40} duration={420} />
                                 </div>
                             </div>
                             <div className="space-y-3 px-4 py-3 rounded-2xl" style={{background: 'linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%)', border: '1px solid rgba(236, 72, 153, 0.3)'}}>
@@ -334,9 +377,10 @@ export default function Slots() {
                                      style={{fontFamily: 'Orbitron, sans-serif', color: '#ff6b35', textShadow: '0 0 10px rgba(255, 107, 53, 0.6)'}}>
                                     🎲 Current Bet
                                 </div>
-                                <div className="text-4xl font-black"
-                                     style={{fontFamily: 'Orbitron, sans-serif', color: '#ff6b35', textShadow: '0 0 15px rgba(255, 107, 53, 0.8)'}}>
-                                    ${bet}
+                                <div className="text-4xl font-black bet-display"
+                                     style={{fontFamily: 'Orbitron, sans-serif', textShadow: '0 0 15px rgba(255, 107, 53, 0.8)'}}>
+                                    <span className="currency-symbol">$</span>
+                                    <WheelNumber value={asWheelValue(bet)} digitHeight={36} duration={420} />
                                 </div>
                             </div>
                             <div className="space-y-3 px-4 py-3 rounded-2xl" style={{background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 107, 53, 0.1) 100%)', border: '1px solid rgba(255, 215, 0, 0.3)'}}>
@@ -344,34 +388,28 @@ export default function Slots() {
                                      style={{fontFamily: 'Orbitron, sans-serif', color: '#ffd700', textShadow: '0 0 10px rgba(255, 215, 0, 0.6)'}}>
                                     🏆 Last Win
                                 </div>
-                                <div className={`text-4xl font-black ${lastWin > 0 ? 'animate-bounce' : ''}`}
-                                     style={{fontFamily: 'Orbitron, sans-serif', color: lastWin > 0 ? '#ffff00' : '#b0b0b0', textShadow: lastWin > 0 ? '0 0 15px rgba(255, 255, 0, 0.8)' : 'none'}}>
-                                    ${lastWin}
+                                <div className={`text-4xl font-black lastwin-display ${lastWin > 0 ? 'animate-bounce win' : ''}`}
+                                     style={{fontFamily: 'Orbitron, sans-serif', textShadow: lastWin > 0 ? '0 0 15px rgba(255, 255, 0, 0.8)' : 'none'}}>
+                                    <span className="currency-symbol">$</span>
+                                    <WheelNumber value={asWheelValue(lastWin)} digitHeight={36} duration={420} />
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Separator */}
                     <div className="w-48 h-1.5 rounded-full" style={{background: 'linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.8), rgba(236, 72, 153, 0.8), transparent)', boxShadow: '0 0 20px rgba(168, 85, 247, 0.5)'}}></div>
 
-                    {/* Main Slot Machine */}
                     <div className="rounded-3xl p-8 shadow-2xl backdrop-blur-sm" style={{background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%)', border: '2px solid rgba(168, 85, 247, 0.4)', boxShadow: '0 0 40px rgba(168, 85, 247, 0.3), 0 0 60px rgba(236, 72, 153, 0.2)'}}>
                         <div className="relative" style={{perspective: '1200px'}}>
 
-                            {/* Machine Body */}
                             <div className="relative" style={{width: '750px', margin: '0 auto'}}>
 
-                                {/* Outer Cabinet */}
                                 <div className="rounded-3xl relative overflow-hidden" style={{background: 'linear-gradient(135deg, #d63031 0%, #ff6b35 50%, #c1250f 100%)', padding: '35px', boxShadow: '0 30px 80px rgba(0,0,0,0.8), inset -8px -8px 20px rgba(0,0,0,0.4), inset 8px 8px 20px rgba(255,255,255,0.15), 0 0 60px rgba(255, 107, 53, 0.5)'}}>
 
-                                    {/* Cabinet Shine */}
                                     <div className="absolute inset-0 rounded-3xl" style={{background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%)', pointerEvents: 'none'}}></div>
                                     
-                                    {/* Neon Glow Overlay */}
                                     <div className="absolute inset-0 rounded-3xl" style={{background: 'radial-gradient(ellipse at center, rgba(168, 85, 247, 0.1) 0%, transparent 70%)', pointerEvents: 'none'}}></div>
 
-                                {/* Top Section - BIG WIN Display */}
                                 <div className="text-center mb-8 relative">
                                     <div className="inline-block px-10 py-5 rounded-3xl relative" style={{background: 'linear-gradient(180deg, #ffff00 0%, #ffd700 50%, #ffed4e 100%)', boxShadow: '0 0 50px rgba(255, 215, 0, 1), inset 0 4px 8px rgba(255,255,255,0.8), 0 10px 30px rgba(0,0,0,0.5)', border: '5px solid #c1250f', transform: 'scale(1.05)'}}>
                                         <span className="font-black text-4xl block" style={{fontFamily: 'Arial Black, sans-serif', color: '#c1250f', textShadow: '3px 3px 0 rgba(0,0,0,0.5), -2px -2px 0 rgba(255,255,255,0.8)'}}>
@@ -394,25 +432,20 @@ export default function Slots() {
                                 {/* Reels Container */}
                                 <div className="relative mb-8 p-10 rounded-3xl" style={{background: 'linear-gradient(135deg, rgba(0,0,0,0.6), rgba(20,20,40,0.7))', border: '8px solid #8b4513', boxShadow: 'inset 0 8px 16px rgba(0,0,0,0.9), inset 0 -8px 16px rgba(0,0,0,0.7), 0 10px 40px rgba(0,0,0,0.8), 0 0 30px rgba(255, 107, 53, 0.3)'}}>
 
-                                    {/* Reel Display */}
                                     <div className="flex justify-center gap-10 mb-8">
                                         {reels.map((reelSymbols, index) => (
                                             <div key={index} className="relative">
-                                                {/* Reel Outer */}
                                                 <div className="relative" style={{width: '140px', height: '140px', background: 'linear-gradient(135deg, #8b6914, #654321)', border: '8px solid #8b4513', borderRadius: '16px', boxShadow: 'inset 0 8px 16px rgba(0,0,0,0.9), 0 10px 30px rgba(255,215,0,0.4), 0 0 25px rgba(255,107,53,0.3)', padding: '8px'}}>
 
-                                                    {/* Reel Display Screen */}
                                                     <div className="w-full h-full rounded-lg flex items-center justify-center overflow-hidden relative" style={{background: 'linear-gradient(to bottom, #ffd700, #ffed4e)', border: '3px solid #ff6b35', boxShadow: 'inset 0 3px 8px rgba(255,255,255,0.7), inset 0 -2px 5px rgba(0,0,0,0.2), 0 0 20px rgba(255,215,0,0.6), 0 0 40px rgba(255,107,53,0.3)'}}>
                                                         <div className={`transition-all duration-300 ${isSpinning ? 'animate-spin' : ''}`} style={{textShadow: '2px 2px 4px rgba(0,0,0,0.4)'}}>
                                                             <img src={SYMBOL_IMAGES[reelSymbols[0]]} alt={reelSymbols[0]} style={{width: '100px', height: '100px', objectFit: 'contain', filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.5))'}} />
                                                         </div>
 
-                                                        {/* Spinning Overlay */}
                                                         {isSpinning && (
                                                             <div className="absolute inset-0 rounded-md animate-pulse" style={{background: 'radial-gradient(ellipse at center, transparent 0%, rgba(255,215,0,0.3) 100%)'}}></div>
                                                         )}
 
-                                                        {/* Win Glow */}
                                                         {lastWin > 0 && !isSpinning && (
                                                             <div className="absolute inset-0 rounded-md border-2 animate-ping" style={{borderColor: '#ff6b35', boxShadow: '0 0 15px #ff6b35'}}></div>
                                                         )}

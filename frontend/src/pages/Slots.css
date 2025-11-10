@@ -45,3 +45,57 @@
 .tableelem {
     border-radius: 8px;
 }
+
+.balance-display,
+.bet-display,
+.lastwin-display {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.balance-display .currency-symbol,
+.bet-display .currency-symbol,
+.lastwin-display .currency-symbol {
+    font-size: 2.5rem;
+    font-family: 'Orbitron, sans-serif';
+}
+
+.balance-display .wheel-number .digit,
+.balance-display .currency-symbol {
+    color: #00ffff;
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+    font-family: 'Orbitron, sans-serif';
+    font-size: 2.5rem;
+}
+
+.bet-display .wheel-number .digit,
+.bet-display .currency-symbol {
+    color: #ff6b35;
+    text-shadow: 0 0 15px rgba(255, 107, 53, 0.8);
+    font-family: 'Orbitron, sans-serif';
+    font-size: 2.4rem;
+}
+
+.lastwin-display .wheel-number .digit,
+.lastwin-display .currency-symbol {
+    color: #b0b0b0;
+    font-family: 'Orbitron, sans-serif';
+    font-size: 2.4rem;
+}
+
+.lastwin-display.win .wheel-number .digit,
+.lastwin-display.win .currency-symbol {
+    color: #ffff00;
+    text-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
+}
+
+.digit-static {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    font-family: 'Orbitron, sans-serif';
+    font-size: 2.4rem;
+    color: inherit;
+}
