@@ -211,12 +211,12 @@ app.get("/api/bets", async (req, res) => {
 
 // Добавить ставку
 app.post("/api/bets", async (req, res) => {
-	const { user_id, game_id, amount, result, payout, winning_number } = req.body;
+	const { user_id, game_id, amount, result, payout } = req.body;
 	try {
 		const q = `
-      INSERT INTO bets (user_id, game_id, amount, result, payout, winning_number)
-      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
-		const r = await pool.query(q, [user_id, game_id, amount, result, payout, winning_number]);
+      INSERT INTO bets (user_id, game_id, amount, result, payout)
+      VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+		const r = await pool.query(q, [user_id, game_id, amount, result, payout]);
 		res.status(201).json(r.rows[0]);
 	} catch (err) {
 		console.error(err);

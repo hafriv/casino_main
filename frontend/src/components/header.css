@@ -227,20 +227,17 @@
 }
 
 .bonus-image {
-    position: absolute;
-    right: 25%;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 120px;
+    height: 80px;
     width: auto;
+    margin-left: 1rem;
     z-index: 10;
 }
 
-@media (max-width: 1724px) {
+@media (max-width: 1500px) {
     .bonus-image {
-       opacity: 0;
+       display: none;
     }
-    }
+}
 @media (max-width: 1200px) {
     .header {
         flex-direction: column;

@@ -132,6 +132,7 @@ export default function Header() {
                     <img src={logo} alt="XPOW Casino" className="logo-image" />
                 </div>
                 <OnlinePlayers />
+                <img src={bonus} alt="Bonus" className="bonus-image" />
             </div>
 
             <div className={`header-center ${mobileOpen ? 'mobile-open' : ''}`}>
@@ -149,7 +150,6 @@ export default function Header() {
             </div>
 
             <div className="header-right">
-                <img src={bonus} alt="Bonus" className="bonus-image" />
                 <button
                     className="mobile-toggle"
                     aria-controls="main-navigation"

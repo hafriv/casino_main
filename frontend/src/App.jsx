@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import LuckyJet from './pages/LuckyJet';
 import RoulettePage from './pages/Roulette';
+import SlotsPage from './pages/Slots';
 import BonusPage from './pages/Bonus';
 import RedirectPage from './pages/RedirectPage';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -35,6 +36,11 @@ function App() {
       <Route path="/roulette" element={
         <ProtectedRoute>
           <RoulettePage />
+        </ProtectedRoute>
+      } />
+      <Route path="/slots" element={
+        <ProtectedRoute>
+          <SlotsPage />
         </ProtectedRoute>
       } />
     </Routes>

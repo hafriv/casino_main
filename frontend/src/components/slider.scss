@@ -49,9 +49,10 @@ src: url('../assets/fonts/oldb.ttf') format('truetype');
 
 .layers__item {
   position: absolute;
-  inset: -5vw;
-  background-size: cover;
+  inset: 0;
+  background-size: contain;
   background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,7 +70,7 @@ src: url('../assets/fonts/oldb.ttf') format('truetype');
 .slider .slide .hero-content {
   position: absolute;
   bottom: 10px;
-  left: 20px;
+  left: 80px;
   z-index: 10;
   display: flex;
   align-items: center;
@@ -91,6 +92,10 @@ src: url('../assets/fonts/oldb.ttf') format('truetype');
   text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
   margin: 0;
+}
+
+.slide:nth-child(3) .hero-content {
+  left: 100px;
 }
 
 .slider {
