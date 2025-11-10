@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { RouletteWheel, RouletteTable, ChipList } from 'react-casino-roulette';
 import 'react-casino-roulette/dist/index.css';
-import ParticlesBackground from '../components/ParticlesBackground.jsx';
 import Header from '../components/header.jsx';
 import Footer from '../components/Footer.jsx';
 import WinModal from '../components/WinModal.jsx';
@@ -10,7 +9,6 @@ import Gold from '../assets/badges/Gold.png';
 import Platinum from '../assets/badges/Platinum.png';
 import Diamond from '../assets/badges/Diamond.png';
 import './Roulette.css';
-import rouletteBanner from '../assets/roulette.gif';
 
 import '../App.css';
 
