@@ -256,8 +256,7 @@ export default function Header() {
             </header>
         </div>
         <AuthModal isOpen={authModalOpen} onClose={handleCloseAuth} mode={authMode} />
-        
-        {/* Bonus Modal */}
+
         {bonusModalOpen && ReactDOM.createPortal(
             <>
                 <style>{`
