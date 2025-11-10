@@ -23,7 +23,7 @@ const wss = new WebSocketServer({ server });
 
 const activeUsers = new Map();
 
-// Подключение к ПОСГРЕ С
+// Подключение к ПОСГРЕС
 const pool = new Pool({
 	user: process.env.PGUSER,
 	host: process.env.PGHOST,
