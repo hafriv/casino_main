@@ -1,16 +1,39 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import './AuthModal.css';
 
 export default function AuthModal({ isOpen, onClose, mode = 'login' }) {
   const [formMode, setFormMode] = useState(mode);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isClosing, setIsClosing] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
+
+  React.useEffect(() => {
+    if (isOpen) {
+      setFormMode(mode);
+      setError('');
+      setFormData({
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      });
+    }
+  }, [isOpen, mode]);
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsClosing(false);
+      onClose();
+    }, 300);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -58,7 +81,7 @@ export default function AuthModal({ isOpen, onClose, mode = 'login' }) {
       localStorage.setItem('user', JSON.stringify(newUser));
       document.dispatchEvent(new CustomEvent('userLoggedIn'));
       setFormData({ username: '', email: '', password: '', confirmPassword: '' });
-      onClose();
+      handleClose();
     } catch (err) {
       setError(err.message || 'Registration failed');
     } finally {
@@ -95,7 +118,7 @@ export default function AuthModal({ isOpen, onClose, mode = 'login' }) {
       localStorage.setItem('user', JSON.stringify(user));
       document.dispatchEvent(new CustomEvent('userLoggedIn'));
       setFormData({ username: '', email: '', password: '', confirmPassword: '' });
-      onClose();
+      handleClose();
     } catch (err) {
       setError(err.message || 'Login failed');
     } finally {
@@ -105,10 +128,10 @@ export default function AuthModal({ isOpen, onClose, mode = 'login' }) {
 
   if (!isOpen) return null;
 
-  return (
-    <div className="auth-modal-overlay" onClick={onClose}>
-      <div className="auth-modal" onClick={(e) => e.stopPropagation()}>
-        <button className="auth-modal-close" onClick={onClose}>&times;</button>
+  const modalContent = (
+    <div className={`auth-modal-overlay ${isClosing ? 'closing' : ''}`} onClick={handleClose}>
+      <div className={`auth-modal ${isClosing ? 'closing' : ''}`} onClick={(e) => e.stopPropagation()}>
+        <button className="auth-modal-close" onClick={handleClose}>&times;</button>
 
         {formMode === 'register' ? (
           <form onSubmit={handleRegister} className="auth-form">
@@ -226,4 +249,6 @@ export default function AuthModal({ isOpen, onClose, mode = 'login' }) {
       </div>
     </div>
   );
+
+  return ReactDOM.createPortal(modalContent, document.getElementById('modal-root'));
 }

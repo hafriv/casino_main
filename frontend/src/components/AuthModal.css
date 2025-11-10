@@ -8,16 +8,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  animation: fadeIn 0.2s ease-out;
+  z-index: 99999;
+  animation: authFadeIn 0.3s ease-out;
 }
 
-@keyframes fadeIn {
+.auth-modal-overlay.closing {
+  animation: authFadeOut 0.3s ease-out;
+}
+
+@keyframes authFadeIn {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes authFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 
@@ -30,10 +43,14 @@
   width: 90%;
   box-shadow: 0 8px 32px rgba(0, 212, 255, 0.3);
   position: relative;
-  animation: slideUp 0.3s ease-out;
+  animation: authSlideUp 0.3s ease-out;
 }
 
-@keyframes slideUp {
+.auth-modal.closing {
+  animation: authSlideDown 0.3s ease-out;
+}
+
+@keyframes authSlideUp {
   from {
     transform: translateY(20px);
     opacity: 0;
@@ -41,6 +58,17 @@
   to {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+@keyframes authSlideDown {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(20px);
+    opacity: 0;
   }
 }
 
