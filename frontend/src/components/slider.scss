@@ -5,7 +5,6 @@ src: url('../assets/fonts/oldb.ttf') format('truetype');
   font-style: normal;
 }
 
-/* Queenrocker font for online players number */
 @font-face {
   font-family: 'Queen Rocker';
   src: url('../assets/fonts/Queenrocker.ttf') format('truetype');
@@ -27,7 +26,7 @@ src: url('../assets/fonts/oldb.ttf') format('truetype');
   margin: 0 auto;
   padding: 20px;
   display: flex;
-  align-items: center; /* vertical center children (online panel + slider) */
+  align-items: center;
   gap: 20px;
   z-index: 10;
 }
@@ -110,7 +109,6 @@ src: url('../assets/fonts/oldb.ttf') format('truetype');
   z-index: 10;
 }
 
-/* Online players panel (left of slider) */
 .online-players {
   width: 140px;
   min-width: 110px;
@@ -118,8 +116,8 @@ src: url('../assets/fonts/oldb.ttf') format('truetype');
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg, #0e1a22 0%, #0b1216 100%); /* dark, tactical look */
-  border: 2px solid rgba(77,166,255,0.06); /* blue accent */
+  background: linear-gradient(180deg, #0e1a22 0%, #0b1216 100%);
+  border: 2px solid rgba(77,166,255,0.06);
   box-shadow: 0 6px 18px rgba(0,0,0,0.45);
   border-radius: 8px;
   color: #fff;
@@ -140,10 +138,9 @@ src: url('../assets/fonts/oldb.ttf') format('truetype');
 }
 
 .online-players .op-value {
-  /* Use Queen Rocker for the online players number */
   font-family: 'Queen Rocker', 'Old Bastards', sans-serif;
   font-size: 2rem;
-  color: #4da6ff; /* blue accent */
+  color: #4da6ff;
   text-shadow: 1px 1px 0 rgba(0,0,0,0.6);
 }
 
@@ -157,7 +154,6 @@ src: url('../assets/fonts/oldb.ttf') format('truetype');
   letter-spacing: 1px;
 }
 
-/* Wheel number styles */
 .wheel-number .digit-slot {
   width: 20px;
   overflow: hidden;

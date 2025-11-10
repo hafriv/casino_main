@@ -1,0 +1,123 @@
+.win-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  animation: winFadeIn 0.3s ease-out;
+}
+
+.win-modal-overlay.closing {
+  animation: winFadeOut 0.3s ease-out;
+}
+
+@keyframes winFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes winFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.win-modal {
+  background: linear-gradient(135deg, #001a33 0%, #003366 100%);
+  border: 2px solid #00d4ff;
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 300px;
+  width: 90%;
+  box-shadow: 0 8px 32px rgba(0, 212, 255, 0.3);
+  position: relative;
+  animation: winSlideUp 0.3s ease-out;
+}
+
+.win-modal.closing {
+  animation: winSlideDown 0.3s ease-out;
+}
+
+@keyframes winSlideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes winSlideDown {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+}
+
+.win-modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.win-modal-message {
+  color: #00d4ff;
+  font-size: 18px;
+  text-align: center;
+  margin: 0;
+  font-weight: 500;
+}
+
+.win-modal-ok {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #00d4ff 0%, #00a8cc 100%);
+  color: #001a33;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.win-modal-ok:hover {
+  background: linear-gradient(135deg, #00ffff 0%, #00d4ff 100%);
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.win-modal-ok:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+  .win-modal {
+    padding: 20px;
+  }
+
+  .win-modal-message {
+    font-size: 16px;
+  }
+}

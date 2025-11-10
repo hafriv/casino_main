@@ -141,20 +141,3 @@ VALUES
 (13, 'tok_mmm333', NOW() + INTERVAL '7 days'),
 (14, 'tok_nnn444', NOW() + INTERVAL '7 days'),
 (15, 'tok_ooo555', NOW() + INTERVAL '7 days');
-
--- 1. Создаём функцию-триггер
-CREATE OR REPLACE FUNCTION set_default_balance()
-RETURNS TRIGGER AS $$
-BEGIN
-    IF NEW.balance IS NULL THEN
-        NEW.balance := 50.00;
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- 2. Создаём триггер на таблице users
-CREATE TRIGGER trigger_set_default_balance
-BEFORE INSERT ON users
-FOR EACH ROW
-EXECUTE FUNCTION set_default_balance();

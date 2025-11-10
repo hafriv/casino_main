@@ -103,7 +103,6 @@ export default function Header() {
         } else {
             setBalance(0);
         }
-        // Dispatch event to notify other components
         document.dispatchEvent(new Event('balanceUpdated'));
     };
 

@@ -11,19 +11,16 @@ const sliderData = [
     id: 'slide-1',
     image: luckyJetGif,
     link: '/lucky-jet',
-    title: 'Lucky Jet',
   },
   {
     id: 'slide-2',
     image: rouletteGif,
     link: '/roulette',
-    title: 'Roulette',
   },
   {
     id: 'slide-3',
     image: slotsImg,
     link: '/slots',
-    title: 'Slots',
   },
 ];
 
@@ -49,7 +46,6 @@ const Slider = ({ showLabels = true }) => {
     goToSlide(prev);
   };
 
-  // Auto slide
   useEffect(() => {
     if (!showLabels) return;
 
@@ -69,7 +65,6 @@ const Slider = ({ showLabels = true }) => {
     }
   }, [isTransitioning]);
 
-  // Parallax effect
   useEffect(() => {
     const handleMouseMove = (e) => {
       const moveX = (e.clientX - window.innerWidth / 2) * -0.005;

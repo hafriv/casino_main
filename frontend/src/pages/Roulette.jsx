@@ -4,10 +4,12 @@ import 'react-casino-roulette/dist/index.css';
 import ParticlesBackground from '../components/ParticlesBackground.jsx';
 import Header from '../components/header.jsx';
 import Footer from '../components/Footer.jsx';
+import WinModal from '../components/WinModal.jsx';
 import Bronze from '../assets/badges/Bronze.png';
 import Gold from '../assets/badges/Gold.png';
 import Platinum from '../assets/badges/Platinum.png';
 import Diamond from '../assets/badges/Diamond.png';
+import './Roulette.css';
 import rouletteBanner from '../assets/roulette.gif';
 
 import '../App.css';
@@ -28,6 +30,8 @@ export default function Roulette() {
     const [winningBet, setWinningBet] = useState('-1');
     const [wheelStart, setWheelStart] = useState(false);
     const [readOnly, setReadOnly] = useState(false);
+    const [winModalOpen, setWinModalOpen] = useState(false);
+    const [winMessage, setWinMessage] = useState('');
     const balanceBeforeSpinRef = useRef(0);
 
     // Calculate derived values
@@ -244,9 +248,11 @@ export default function Roulette() {
             });
         });
         if (totalBetAmount === 0) {
-            alert("No bets were placed.");
+            setWinMessage("No bets were placed.");
+            setWinModalOpen(true);
         } else {
-            alert(totalPayout > 0 ? "You won $" + totalPayout : "You lost $" + totalBetAmount);
+            setWinMessage(totalPayout > 0 ? "You won $" + totalPayout : "You lost $" + totalBetAmount);
+            setWinModalOpen(true);
         }
         // Clear stored bets after spin
         localStorage.removeItem('roulette_bets');
@@ -438,13 +444,13 @@ export default function Roulette() {
                     />
 
                     {/* Controls */}
-                    <div className="flex space-x-8 mt-8 justify-center">
+                    <div className="btn1div flex space-x-8 mt-8 justify-center">
                         <button
                             onClick={doSpin}
                             disabled={wheelStart || !hasBets}
                             className="relative px-24 py-8 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold rounded-full shadow-lg hover:from-green-600 hover:to-green-700 transform hover:scale-110 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none overflow-hidden text-2xl"
                         >
-                            <span className="relative z-10">🎰 Spin ({totalBetAmount}$)</span>
+                            <span className="relative z-10 btn1">Spin ({totalBetAmount}$)</span>
                             <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-500 opacity-0 hover:opacity-20 transition-opacity duration-200"></div>
                         </button>
                         <button
@@ -455,12 +461,17 @@ export default function Roulette() {
                             disabled={readOnly}
                             className="relative px-24 py-8 bg-gradient-to-r from-red-500 to-red-600 text-white font-bold rounded-full shadow-lg hover:from-red-600 hover:to-red-700 transform hover:scale-110 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none overflow-hidden text-2xl"
                         >
-                            <span className="relative z-10">🗑️ Clear Bets</span>
+                            <span className="relative z-10 btn1"> Clear Bets</span>
                             <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-red-500 opacity-0 hover:opacity-20 transition-opacity duration-200"></div>
                         </button>
                     </div>
                 </div>
             </div>
+            <WinModal
+                isOpen={winModalOpen}
+                onClose={() => setWinModalOpen(false)}
+                message={winMessage}
+            />
             <Footer />
         </div>
     );
