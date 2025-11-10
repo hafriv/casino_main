@@ -11,19 +11,16 @@ const sliderData = [
     id: 'slide-1',
     image: luckyJetGif,
     link: '/lucky-jet',
-    title: 'Lucky Jet',
   },
   {
     id: 'slide-2',
     image: rouletteGif,
     link: '/roulette',
-    title: 'Roulette',
   },
   {
     id: 'slide-3',
     image: slotsImg,
     link: '/slots',
-    title: 'Slots',
   },
 ];
 

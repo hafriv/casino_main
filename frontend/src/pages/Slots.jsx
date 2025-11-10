@@ -12,7 +12,7 @@ import grape from '../assets/img/slot_icons/grape.png';
 import mango from '../assets/img/slot_icons/mango.png';
 import pear from '../assets/img/slot_icons/pear.png';
 import xpowLogo from '../assets/logo.png';
-
+import './Slots.css';
 // Slot symbols (use keys for logic, images for display)
 const SYMBOLS = ['cherry', 'pear', 'mango', 'grape', 'fig', 'diamond', 'coconut', 'coconut', 'coconut'];
 
@@ -527,12 +527,12 @@ export default function Slots() {
                                 🎲 Adjust Your Bet
                             </span>
                         </div>
-                        <div className="flex flex-col items-center gap-4">
-                            <div className="flex items-center justify-center gap-4">
+                        <div className="orbc">
+                            <div className="orbc2">
                                 <button
                                     onClick={() => setBet(Math.max(1, bet - 1000))}
                                     disabled={isSpinning}
-                                    className="px-4 py-3 rounded-lg font-bold shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                                    className="orb"
                                     style={{fontFamily: 'Orbitron, sans-serif', background: 'linear-gradient(135deg, #ff3333 0%, #cc0000 100%)', color: 'white', boxShadow: '0 0 20px rgba(255, 51, 51, 0.5)'}}
                                     title="Decrease bet by $1000"
                                 >
@@ -541,7 +541,7 @@ export default function Slots() {
                                 <button
                                     onClick={() => setBet(Math.max(1, bet - 100))}
                                     disabled={isSpinning}
-                                    className="px-4 py-3 rounded-lg font-bold shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                                    className="orb"
                                     style={{fontFamily: 'Orbitron, sans-serif', background: 'linear-gradient(135deg, #ff3333 0%, #cc0000 100%)', color: 'white', boxShadow: '0 0 20px rgba(255, 51, 51, 0.5)'}}
                                     title="Decrease bet by $100"
                                 >
@@ -550,14 +550,14 @@ export default function Slots() {
                                 <button
                                     onClick={() => setBet(Math.max(1, bet - 10))}
                                     disabled={isSpinning}
-                                    className="px-4 py-3 rounded-lg font-bold shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                                    className="orb"
                                     style={{fontFamily: 'Orbitron, sans-serif', background: 'linear-gradient(135deg, #ff3333 0%, #cc0000 100%)', color: 'white', boxShadow: '0 0 20px rgba(255, 51, 51, 0.5)'}}
                                     title="Decrease bet by $10"
                                 >
                                     -10
                                 </button>
 
-                                <div className="px-10 py-4 rounded-2xl border-3 shadow-lg" style={{background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 107, 53, 0.2) 100%)', borderColor: 'rgba(255, 215, 0, 0.5)', boxShadow: '0 0 30px rgba(255, 215, 0, 0.3)'}}>
+                                <div className="orb" >
                                     <div className="text-center">
                                         <div className="text-3xl font-black"
                                              style={{fontFamily: 'Orbitron, sans-serif', color: '#ffff00', textShadow: '0 0 10px rgba(255, 255, 0, 0.8)'}}>
@@ -570,7 +570,7 @@ export default function Slots() {
                                 <button
                                     onClick={() => setBet(Math.min(balance, bet + 10))}
                                     disabled={isSpinning}
-                                    className="px-4 py-3 rounded-lg font-bold shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                                    className="orb"
                                     style={{fontFamily: 'Orbitron, sans-serif', background: 'linear-gradient(135deg, #00dd00 0%, #00aa00 100%)', color: 'white', boxShadow: '0 0 20px rgba(0, 221, 0, 0.5)'}}
                                     title="Increase bet by $10"
                                 >
@@ -579,7 +579,7 @@ export default function Slots() {
                                 <button
                                     onClick={() => setBet(Math.min(balance, bet + 100))}
                                     disabled={isSpinning}
-                                    className="px-4 py-3 rounded-lg font-bold shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                                    className="orb"
                                     style={{fontFamily: 'Orbitron, sans-serif', background: 'linear-gradient(135deg, #00dd00 0%, #00aa00 100%)', color: 'white', boxShadow: '0 0 20px rgba(0, 221, 0, 0.5)'}}
                                     title="Increase bet by $100"
                                 >
@@ -588,7 +588,7 @@ export default function Slots() {
                                 <button
                                     onClick={() => setBet(Math.min(balance, bet + 1000))}
                                     disabled={isSpinning}
-                                    className="px-4 py-3 rounded-lg font-bold shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                                    className="orb"
                                     style={{fontFamily: 'Orbitron, sans-serif', background: 'linear-gradient(135deg, #00dd00 0%, #00aa00 100%)', color: 'white', boxShadow: '0 0 20px rgba(0, 221, 0, 0.5)'}}
                                     title="Increase bet by $1000"
                                 >
@@ -599,7 +599,7 @@ export default function Slots() {
                             <button
                                 onClick={maxBet}
                                 disabled={isSpinning}
-                                className="px-8 py-4 font-black rounded-2xl shadow-lg transform hover:scale-110 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-lg uppercase tracking-widest"
+                                className="orb"
                                 style={{fontFamily: 'Orbitron, sans-serif', background: 'linear-gradient(135deg, #ffd700 0%, #ff6b35 100%)', color: '#000000', boxShadow: '0 0 30px rgba(255, 215, 0, 0.6), 0 8px 16px rgba(0,0,0,0.6)'}}
                                 title="Bet all your balance"
                             >
@@ -616,11 +616,11 @@ export default function Slots() {
                         <div className="flex flex-col space-y-4 items-center">
 
                         {/* Primary Action Buttons */}
-                        <div className="flex space-x-6">
+                        <div className="flex space-x-6 orbc">
                             <button
                                 onClick={spin}
                                 disabled={isSpinning || balance < bet}
-                                className="relative px-16 py-8 text-white font-black rounded-3xl shadow-2xl transform hover:scale-110 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none overflow-hidden group text-xl"
+                                className="orb relative px-16 py-8 text-white font-black rounded-3xl shadow-2xl transform hover:scale-110 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none overflow-hidden group text-xl"
                                 style={{
                                     fontFamily: 'Orbitron, sans-serif',
                                     background: 'linear-gradient(135deg, #00ff00 0%, #00cc00 50%, #00aa00 100%)',
@@ -628,8 +628,8 @@ export default function Slots() {
                                     textShadow: '0 0 10px rgba(0, 255, 0, 0.6)'
                                 }}
                             >
-                                <span className="relative z-10 flex items-center space-x-3">
-                                    <span className={`text-3xl ${isSpinning ? 'animate-spin' : ''}`}>🎰</span>
+                                <span className=" relative z-10 flex items-center space-x-3">
+                                    <span className={`text-3xl ${isSpinning ? 'animate-spin' : ''}`}></span>
                                     <span>{isSpinning ? 'SPINNING...' : 'SPIN NOW'}</span>
                                 </span>
                                 <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-3xl" style={{background: 'linear-gradient(135deg, #00ff00, #ff6b35)'}}></div>
@@ -644,7 +644,7 @@ export default function Slots() {
                             <button
                                 onClick={() => setBet(10)}
                                 disabled={isSpinning}
-                                className="relative px-10 py-6 font-bold rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none overflow-hidden"
+                                className="orb relative px-10 py-6 font-bold rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none overflow-hidden"
                                 style={{
                                     fontFamily: 'Orbitron, sans-serif',
                                     background: 'linear-gradient(to right, #6366f1, #4f46e5)',
@@ -653,7 +653,7 @@ export default function Slots() {
                                 title="Reset bet to $10"
                             >
                                 <span className="relative z-10 text-lg flex items-center space-x-2">
-                                    <span>🔄</span>
+                                    <span></span>
                                     <span>CLEAR BET</span>
                                 </span>
                             </button>
@@ -663,7 +663,7 @@ export default function Slots() {
                         <div className="flex space-x-4">
                             <button
                                 onClick={() => setSoundEnabled(!soundEnabled)}
-                                className="px-6 py-3 text-white font-bold rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200"
+                                className="orb px-6 py-3 text-white font-bold rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200"
                                 style={{fontFamily: 'Orbitron, sans-serif', background: 'linear-gradient(to right, #6f42c1, #5a32a3)'}}
                             >
                                 {soundEnabled ? '🔊 SOUND ON' : '🔇 SOUND OFF'}
@@ -672,7 +672,7 @@ export default function Slots() {
                             {balance === 0 && (
                                 <button
                                     onClick={getBonus}
-                                    className="px-6 py-3 text-white font-bold rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200 animate-pulse"
+                                    className="orb px-6 py-3 text-white font-bold rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200 animate-pulse"
                                     style={{
                                         fontFamily: 'Orbitron, sans-serif',
                                         background: 'linear-gradient(to right, #ff6b35, #f7931e)',
